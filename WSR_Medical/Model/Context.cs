@@ -8,6 +8,6 @@ namespace WSR_Medical.Model
 {
     public static class Context
     {
-        public static WSR_MedicalEntities _con = new WSR_MedicalEntities();
+        public static WSR_MedicalEntities1 _con = new WSR_MedicalEntities1();
     }
 }

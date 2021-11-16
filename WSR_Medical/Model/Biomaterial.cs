@@ -15,7 +15,6 @@ namespace WSR_Medical.Model
     public partial class Biomaterial
     {
         public int Id { get; set; }
-        public string Name { get; set; }
         public int PateintId { get; set; }
     
         public virtual Patient Patient { get; set; }

@@ -21,11 +21,13 @@ namespace WSR_Medical.Model
         }
     
         public int Id { get; set; }
+        public int CountryId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Inn { get; set; }
         public string Pc { get; set; }
         public string Bik { get; set; }
+        public string Ua { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Patient> Patient { get; set; }

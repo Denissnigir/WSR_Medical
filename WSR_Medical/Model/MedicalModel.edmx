@@ -37,8 +37,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PateintId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
@@ -75,11 +74,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Inn" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Pc" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Bik" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Ua" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="InsuranceType">
           <Key>
@@ -125,6 +126,7 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SecondName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Guid" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BirthDate" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="PassportSerial" Type="nvarchar" MaxLength="4" Nullable="false" />
           <Property Name="PassportNumber" Type="nvarchar" MaxLength="6" Nullable="false" />
@@ -133,6 +135,7 @@
           <Property Name="InsuranceNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="InsuranceTypeId" Type="int" Nullable="false" />
           <Property Name="InsuranceCompanyId" Type="int" Nullable="false" />
+          <Property Name="Ein" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
@@ -234,7 +237,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmployeeService_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="EmployeeService" Type="Self.EmployeeService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -462,8 +467,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PateintId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_Biomaterial_Patient" FromRole="Biomaterial" ToRole="Patient" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Biomaterial1" FromRole="Biomaterial" ToRole="Order" />
@@ -508,11 +512,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Inn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Pc" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Bik" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ua" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_Patient_InsuranceCompany" FromRole="InsuranceCompany" ToRole="Patient" />
         </EntityType>
         <EntityType Name="InsuranceType">
@@ -568,6 +574,7 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SecondName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Guid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BirthDate" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="PassportSerial" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PassportNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
@@ -576,6 +583,7 @@
           <Property Name="InsuranceNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="InsuranceTypeId" Type="Int32" Nullable="false" />
           <Property Name="InsuranceCompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Ein" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Biomaterial" Relationship="Self.FK_Biomaterial_Patient" FromRole="Patient" ToRole="Biomaterial" />
           <NavigationProperty Name="InsuranceCompany" Relationship="Self.FK_Patient_InsuranceCompany" FromRole="Patient" ToRole="InsuranceCompany" />
           <NavigationProperty Name="InsuranceType" Relationship="Self.FK_Patient_InsuranceType" FromRole="Patient" ToRole="InsuranceType" />
@@ -695,7 +703,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmployeeService_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="EmployeeService" Type="Self.EmployeeService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -790,7 +800,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WSR_MedicalEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WSR_MedicalEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Analyzer" EntityType="Self.Analyzer" />
           <EntitySet Name="AnalyzerLog" EntityType="Self.AnalyzerLog" />
           <EntitySet Name="AnalyzerStatus" EntityType="Self.AnalyzerStatus" />
@@ -873,7 +883,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище WSR_MedicalModelContainer" CdmEntityContainer="WSR_MedicalEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище WSR_MedicalModelContainer" CdmEntityContainer="WSR_MedicalEntities1">
           <EntitySetMapping Name="Analyzer">
             <EntityTypeMapping TypeName="WSR_MedicalModel.Analyzer">
               <MappingFragment StoreEntitySet="Analyzer">
@@ -909,7 +919,6 @@
             <EntityTypeMapping TypeName="WSR_MedicalModel.Biomaterial">
               <MappingFragment StoreEntitySet="Biomaterial">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="PateintId" ColumnName="PateintId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -950,11 +959,13 @@
             <EntityTypeMapping TypeName="WSR_MedicalModel.InsuranceCompany">
               <MappingFragment StoreEntitySet="InsuranceCompany">
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Inn" ColumnName="Inn" />
                 <ScalarProperty Name="Pc" ColumnName="Pc" />
                 <ScalarProperty Name="Bik" ColumnName="Bik" />
+                <ScalarProperty Name="Ua" ColumnName="Ua" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1005,6 +1016,7 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="SecondName" ColumnName="SecondName" />
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="PassportSerial" ColumnName="PassportSerial" />
                 <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
@@ -1013,6 +1025,7 @@
                 <ScalarProperty Name="InsuranceNumber" ColumnName="InsuranceNumber" />
                 <ScalarProperty Name="InsuranceTypeId" ColumnName="InsuranceTypeId" />
                 <ScalarProperty Name="InsuranceCompanyId" ColumnName="InsuranceCompanyId" />
+                <ScalarProperty Name="Ein" ColumnName="Ein" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

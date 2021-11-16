@@ -26,53 +26,52 @@ namespace WSR_Medical
         public MainWindow()
         {
             InitializeComponent();
-            ImportUser();
         }
 
-        private void ImportUser()
-        {
-            var fileData = File.ReadAllLines(@"C:\Users\0dmin\Desktop\WorldSkills\8\user.txt");
+    //    private void ImportUser()
+    //    {
+    //        var fileData = File.ReadAllLines(@"C:\Users\0dmin\Desktop\WorldSkills\8\user.txt");
 
-            foreach(var line in fileData)
-            {
-                var data = line.Split('\t');
-                var date = new DateTime();
-                try
-                {
-                    date = Convert.ToDateTime(data[7]);
-                }
-                catch
-                {
-                    var datestring = data[7].Split('.');
-                    date = Convert.ToDateTime($"{datestring[1]}.{datestring[0]}.{datestring[2]}");
-                }
-                Console.WriteLine(date);
+    //        foreach (var line in fileData)
+    //        {
+    //            var data = line.Split('\t');
+    //            var date = new DateTime();
+    //            try
+    //            {
+    //                date = Convert.ToDateTime(data[7]);
+    //            }
+    //            catch
+    //            {
+    //                var datestring = data[7].Split('.');
+    //                date = Convert.ToDateTime($"{datestring[1]}.{datestring[0]}.{datestring[2]}");
+    //            }
+    //            Console.WriteLine(data[7]);
 
-                var tempEmployee = new Employee
-                {
-                    FirstName = data[1],
-                    SecondName = data[2],
-                    MiddleName = data[3],
-                    Login = data[4],
-                    Password = data[5],
-                    Ip = data[6],
-                    Lastenter = date,
-                    RoleId = data[9].ToInt()
-                };
+    //            var tempEmployee = new Employee
+    //            {
+    //                FirstName = data[1],
+    //                SecondName = data[2],
+    //                MiddleName = data[3],
+    //                Login = data[4],
+    //                Password = data[5],
+    //                Ip = data[6],
+    //                Lastenter = date,
+    //                RoleId = data[9].ToInt()
+    //            };
 
-                
-                Context._con.Employee.Add(tempEmployee);
-                Context._con.SaveChanges();
-                foreach(var serviceType in data[8].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var currentService = Context._con.Service.ToList().FirstOrDefault(p => p.Id == serviceType.ToInt());
-                    if(currentService != null)
-                    {
-                        Context._con.EmployeeService.Add(new EmployeeService { EmployeeId = tempEmployee.Id, ServiceId = currentService.Id });
-                    }
-                }
-                Context._con.SaveChanges();
-            }
-        }
-    }
+
+    //            Context._con.Employee.Add(tempEmployee);
+    //            Context._con.SaveChanges();
+    //            foreach (var serviceType in data[8].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+    //            {
+    //                var currentService = Context._con.Service.ToList().FirstOrDefault(p => p.Id == serviceType.ToInt());
+    //                if (currentService != null)
+    //                {
+    //                    Context._con.EmployeeService.Add(new EmployeeService { EmployeeId = tempEmployee.Id, ServiceId = currentService.Id });
+    //                }
+    //            }
+    //            Context._con.SaveChanges();
+    //        }
+    //    }
+    //}
 }

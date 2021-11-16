@@ -13,10 +13,10 @@ namespace WSR_Medical.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class WSR_MedicalEntities : DbContext
+    public partial class WSR_MedicalEntities1 : DbContext
     {
-        public WSR_MedicalEntities()
-            : base("name=WSR_MedicalEntities")
+        public WSR_MedicalEntities1()
+            : base("name=WSR_MedicalEntities1")
         {
         }
     

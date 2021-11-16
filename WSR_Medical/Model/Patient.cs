@@ -26,6 +26,7 @@ namespace WSR_Medical.Model
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string MiddleName { get; set; }
+        public string Guid { get; set; }
         public byte[] BirthDate { get; set; }
         public string PassportSerial { get; set; }
         public string PassportNumber { get; set; }
@@ -34,6 +35,7 @@ namespace WSR_Medical.Model
         public string InsuranceNumber { get; set; }
         public int InsuranceTypeId { get; set; }
         public int InsuranceCompanyId { get; set; }
+        public string Ein { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Biomaterial> Biomaterial { get; set; }
