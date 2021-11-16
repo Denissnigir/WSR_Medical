@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8ee5629c957343efa4b9d8e354a29e54" Name="Diagram1">
+        <EntityTypeShape EntityType="WSR_MedicalModel.Analyzer" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.AnalyzerLog" Width="1.5" PointX="9.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.AnalyzerStatus" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.Biomaterial" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.Employee" Width="1.5" PointX="7.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.EmployeeRole" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.EmployeeService" Width="1.5" PointX="12.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.InsuranceCompany" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.InsuranceType" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.Order" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.OrderService" Width="1.5" PointX="12.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.OrderStatus" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.Patient" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.Service" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.ServiceStatus" Width="1.5" PointX="10.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_AnalyzerLog_Analyzer" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_AnalyzerLog_AnalyzerStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_AnalyzerLog_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_AnalyzerLog_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_Biomaterial_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_Order_Biomaterial1" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_Employee_EmployeeRole" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_EmployeeService_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_EmployeeService_Service" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_Patient_InsuranceCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_Patient_InsuranceType" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_Order_OrderStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_OrderService_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_OrderService_Service" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_OrderService_ServiceStatus" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
