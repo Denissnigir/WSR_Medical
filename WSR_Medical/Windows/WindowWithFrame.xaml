@@ -1,0 +1,36 @@
+﻿<Window x:Class="WSR_Medical.Windows.WindowWithFrame"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WSR_Medical.Windows"
+        mc:Ignorable="d"
+        Title="Медицинская лаборатория №20 г. Санкт-Петербурга" Icon="/WSR_Medical;component/Resources/Logo/logo.ico" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="#FF76E383">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source="/WSR_Medical;component/Resources/Logo/logo.png"/>
+            <TextBlock Grid.Column="1" Text="Медицинская лаборатория №20"/>
+            <Button Click="Exit"  Grid.Column="2" Width="100" Height="35" Content="Выйти"/>
+        </Grid>
+
+        <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden">
+
+        </Frame>
+
+        <Grid Grid.Row="2" Background="#FF76E383">
+
+        </Grid>
+    </Grid>
+</Window>

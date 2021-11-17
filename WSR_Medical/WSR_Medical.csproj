@@ -128,13 +128,23 @@
     <Compile Include="Model\sysdiagrams.cs">
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CaptchaPage.xaml.cs">
+      <DependentUpon>CaptchaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SignInPage.xaml.cs">
+      <DependentUpon>SignInPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Windows\SignIn.xaml.cs">
-      <DependentUpon>SignIn.xaml</DependentUpon>
+    <Compile Include="Utils\ShowMessage.cs" />
+    <Compile Include="Windows\WindowWithFrame.xaml.cs">
+      <DependentUpon>WindowWithFrame.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +195,27 @@
       <DependentUpon>MedicalModel.edmx</DependentUpon>
       <LastGenOutput>MedicalModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Photo\laborant_1.jpeg" />
+    <Resource Include="Resources\Photo\laborant_2.png" />
+    <Resource Include="Resources\Photo\Администратор.png" />
+    <Resource Include="Resources\Photo\Бухгалтер.jpeg" />
+    <Resource Include="Resources\Logo\logo.ico" />
+    <Resource Include="Resources\Logo\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Windows\SignIn.xaml">
+    <Page Include="Pages\AdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CaptchaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SignInPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WindowWithFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
