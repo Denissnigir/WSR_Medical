@@ -80,6 +80,9 @@
     <Compile Include="Model\Employee.cs">
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\EmployeeEnterArchive.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EmployeeRole.cs">
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
@@ -194,16 +197,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\MedicalModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MedicalModel.edmx</DependentUpon>
-      <LastGenOutput>MedicalModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\MedicalModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MedicalModel.edmx</DependentUpon>
-      <LastGenOutput>MedicalModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="Resources\Photo\laborant_1.jpeg" />
     <Resource Include="Resources\Photo\laborant_2.png" />
     <Resource Include="Resources\Photo\Администратор.png" />
@@ -240,6 +233,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\MedicalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MedicalModel.edmx</DependentUpon>
+      <LastGenOutput>MedicalModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\MedicalModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MedicalModel.edmx</DependentUpon>
+      <LastGenOutput>MedicalModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -18,6 +18,7 @@ namespace WSR_Medical.Model
         public Employee()
         {
             this.AnalyzerLog = new HashSet<AnalyzerLog>();
+            this.EmployeeEnterArchive = new HashSet<EmployeeEnterArchive>();
             this.EmployeeService = new HashSet<EmployeeService>();
         }
     
@@ -34,6 +35,8 @@ namespace WSR_Medical.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnalyzerLog> AnalyzerLog { get; set; }
         public virtual EmployeeRole EmployeeRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeEnterArchive> EmployeeEnterArchive { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeService> EmployeeService { get; set; }
     }

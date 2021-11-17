@@ -54,6 +54,16 @@
           <Property Name="Lastenter" Type="date" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="EmployeeEnterArchive">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Login" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="isSuccessfull" Type="bit" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="EmployeeRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -236,6 +246,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeEnterArchive_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeEnterArchive" Type="Self.EmployeeEnterArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeEnterArchive">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeService_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -352,6 +374,7 @@
           <EntitySet Name="AnalyzerStatus" EntityType="Self.AnalyzerStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Biomaterial" EntityType="Self.Biomaterial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeEnterArchive" EntityType="Self.EmployeeEnterArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeService" EntityType="Self.EmployeeService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InsuranceCompany" EntityType="Self.InsuranceCompany" Schema="dbo" store:Type="Tables" />
@@ -386,6 +409,10 @@
           <AssociationSet Name="FK_Employee_EmployeeRole" Association="Self.FK_Employee_EmployeeRole">
             <End Role="EmployeeRole" EntitySet="EmployeeRole" />
             <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeEnterArchive_Employee" Association="Self.FK_EmployeeEnterArchive_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeEnterArchive" EntitySet="EmployeeEnterArchive" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeeService_Employee" Association="Self.FK_EmployeeService_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -487,7 +514,19 @@
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AnalyzerLog" Relationship="Self.FK_AnalyzerLog_Employee" FromRole="Employee" ToRole="AnalyzerLog" />
           <NavigationProperty Name="EmployeeRole" Relationship="Self.FK_Employee_EmployeeRole" FromRole="Employee" ToRole="EmployeeRole" />
+          <NavigationProperty Name="EmployeeEnterArchive" Relationship="Self.FK_EmployeeEnterArchive_Employee" FromRole="Employee" ToRole="EmployeeEnterArchive" />
           <NavigationProperty Name="EmployeeService" Relationship="Self.FK_EmployeeService_Employee" FromRole="Employee" ToRole="EmployeeService" />
+        </EntityType>
+        <EntityType Name="EmployeeEnterArchive">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isSuccessfull" Type="Boolean" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeEnterArchive_Employee" FromRole="EmployeeEnterArchive" ToRole="Employee" />
         </EntityType>
         <EntityType Name="EmployeeRole">
           <Key>
@@ -702,6 +741,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeEnterArchive_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeEnterArchive" Type="Self.EmployeeEnterArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeEnterArchive">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeService_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -800,12 +851,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WSR_MedicalEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WSR_MedicalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Analyzer" EntityType="Self.Analyzer" />
           <EntitySet Name="AnalyzerLog" EntityType="Self.AnalyzerLog" />
           <EntitySet Name="AnalyzerStatus" EntityType="Self.AnalyzerStatus" />
           <EntitySet Name="Biomaterial" EntityType="Self.Biomaterial" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeEnterArchive" EntityType="Self.EmployeeEnterArchive" />
           <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" />
           <EntitySet Name="EmployeeService" EntityType="Self.EmployeeService" />
           <EntitySet Name="InsuranceCompany" EntityType="Self.InsuranceCompany" />
@@ -845,6 +897,10 @@
             <End Role="EmployeeRole" EntitySet="EmployeeRole" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmployeeEnterArchive_Employee" Association="Self.FK_EmployeeEnterArchive_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeEnterArchive" EntitySet="EmployeeEnterArchive" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmployeeService_Employee" Association="Self.FK_EmployeeService_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeService" EntitySet="EmployeeService" />
@@ -883,7 +939,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище WSR_MedicalModelContainer" CdmEntityContainer="WSR_MedicalEntities1">
+        <EntityContainerMapping StorageEntityContainer="Хранилище WSR_MedicalModelContainer" CdmEntityContainer="WSR_MedicalEntities">
           <EntitySetMapping Name="Analyzer">
             <EntityTypeMapping TypeName="WSR_MedicalModel.Analyzer">
               <MappingFragment StoreEntitySet="Analyzer">
@@ -935,6 +991,17 @@
                 <ScalarProperty Name="Ip" ColumnName="Ip" />
                 <ScalarProperty Name="Lastenter" ColumnName="Lastenter" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeEnterArchive">
+            <EntityTypeMapping TypeName="WSR_MedicalModel.EmployeeEnterArchive">
+              <MappingFragment StoreEntitySet="EmployeeEnterArchive">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="isSuccessfull" ColumnName="isSuccessfull" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

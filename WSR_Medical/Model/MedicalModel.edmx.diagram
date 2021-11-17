@@ -4,14 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ef145d4697284ac39d6e35c6d05b139c" Name="Diagram1">
+      <Diagram DiagramId="132ccaa812874efc8c08001b20e5f779" Name="Diagram1">
         <EntityTypeShape EntityType="WSR_MedicalModel.Analyzer" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="WSR_MedicalModel.AnalyzerLog" Width="1.5" PointX="9.75" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="WSR_MedicalModel.AnalyzerStatus" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WSR_MedicalModel.Biomaterial" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="WSR_MedicalModel.Employee" Width="1.5" PointX="7.5" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSR_MedicalModel.EmployeeRole" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="WSR_MedicalModel.EmployeeService" Width="1.5" PointX="12.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.EmployeeEnterArchive" Width="1.5" PointX="9.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.EmployeeRole" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WSR_MedicalModel.EmployeeService" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WSR_MedicalModel.InsuranceCompany" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WSR_MedicalModel.InsuranceType" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="WSR_MedicalModel.Order" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
@@ -28,6 +29,7 @@
         <AssociationConnector Association="WSR_MedicalModel.FK_Biomaterial_Patient" ManuallyRouted="false" />
         <AssociationConnector Association="WSR_MedicalModel.FK_Order_Biomaterial1" ManuallyRouted="false" />
         <AssociationConnector Association="WSR_MedicalModel.FK_Employee_EmployeeRole" ManuallyRouted="false" />
+        <AssociationConnector Association="WSR_MedicalModel.FK_EmployeeEnterArchive_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="WSR_MedicalModel.FK_EmployeeService_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="WSR_MedicalModel.FK_EmployeeService_Service" ManuallyRouted="false" />
         <AssociationConnector Association="WSR_MedicalModel.FK_Patient_InsuranceCompany" ManuallyRouted="false" />

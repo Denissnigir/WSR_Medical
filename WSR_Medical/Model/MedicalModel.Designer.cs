@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\Users\0dmin\source\repos\WSR_Medical\WSR_Medical\Model\MedicalModel.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\0dmin\source\repos\WSR_Medical-Session1\WSR_Medical\Model\MedicalModel.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.
