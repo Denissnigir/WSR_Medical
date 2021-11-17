@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using WSR_Medical.Utils;
 
 namespace WSR_Medical.Pages
@@ -22,10 +23,13 @@ namespace WSR_Medical.Pages
     public partial class CaptchaPage : Page
     {
         Random rnd = new Random();
+        DispatcherTimer dispatcherTimer;
+        TimeSpan timerCounter;
         public CaptchaPage()
         {
             InitializeComponent();
             CaptchaBtn.Content = Convert.ToString(rnd.Next(1000, 9999));
+            dispatcherTimer = new DispatcherTimer();
         }
 
         private void ChangeCaptcha(object sender, RoutedEventArgs e)
@@ -38,9 +42,26 @@ namespace WSR_Medical.Pages
             if(CaptchaTB.Text == (string)CaptchaBtn.Content)
             {
                 ShowMessage.InfMessage("Вы правильно ввели капчу!");
+                NavigationService.Navigate(new SignInPage());
             }
             else
             {
+                ShowMessage.ErrMessage("Вы заблокированы на 10 секунд!");
+                SubmitBtn.IsEnabled = false;
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+                dispatcherTimer.Tick += timerTick;
+                dispatcherTimer.Start();
+            }
+        }
+
+        private void timerTick(object sender, EventArgs e)
+        {
+            timerCounter += TimeSpan.FromSeconds(1);
+            if (timerCounter >= new TimeSpan(0, 0, 10))
+            {
+                ShowMessage.InfMessage("Теперь вы можете снова попробовать!");
+                SubmitBtn.IsEnabled = true;
+                dispatcherTimer.Stop();
                 
             }
         }

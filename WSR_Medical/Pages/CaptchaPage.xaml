@@ -14,9 +14,10 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        <Line X1="350" Y1="-40" X2="430" Y2="-50" Grid.Row="1" Stroke="Black">
+        </Line>
         <Button x:Name="CaptchaBtn" Click="ChangeCaptcha" Background="Transparent" BorderThickness="0" Width="200" Height="45"/>
         <TextBox x:Name="CaptchaTB" Height="45" Width="200" Grid.Row="1"/>
-        <Button Grid.Row="2" Height="45" Width="300" Content="Ввести" Click="ValidateCaptcha"/>
+        <Button x:Name="SubmitBtn" Grid.Row="2" Height="45" Width="300" Content="Ввести" Click="ValidateCaptcha"/>
     </Grid>
 </Page>

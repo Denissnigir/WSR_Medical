@@ -22,7 +22,7 @@
 
             <Image Source="/WSR_Medical;component/Resources/Logo/logo.png"/>
             <TextBlock Grid.Column="1" Text="Медицинская лаборатория №20"/>
-            <Button Click="Exit"  Grid.Column="2" Width="100" Height="35" Content="Выйти"/>
+            <Button x:Name="ExitBtn" Click="Exit"  Grid.Column="2" Width="100" Height="35" Content="Выйти"/>
         </Grid>
 
         <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden">

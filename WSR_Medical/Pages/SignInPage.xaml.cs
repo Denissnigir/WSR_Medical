@@ -60,6 +60,15 @@ namespace WSR_Medical.Pages
                     if (!string.IsNullOrWhiteSpace(LoginTB.Text) && !string.IsNullOrWhiteSpace(PasswordTB.Text))
                     {
                         WindowWithFrame.employee = Context._con.Employee.Where(p => p.Login == LoginTB.Text && p.Password == PasswordTB.Text).FirstOrDefault();
+                        if (WindowWithFrame.employee != null)
+                        {
+                            NavigationService.Navigate(new AdminPage());
+                        }
+                        else
+                        {
+                            ShowMessage.ErrMessage("Неправильный логин или пароль!");
+                            NavigationService.Navigate(new CaptchaPage());
+                        }
                     }
                     else
                     {
@@ -72,6 +81,15 @@ namespace WSR_Medical.Pages
                     if (!string.IsNullOrWhiteSpace(LoginTB.Text) && !string.IsNullOrWhiteSpace(PasswordPB.Password))
                     {
                         WindowWithFrame.employee = Context._con.Employee.Where(p => p.Login == LoginTB.Text && p.Password == PasswordPB.Password).FirstOrDefault();
+                        if (WindowWithFrame.employee != null)
+                        {
+                            NavigationService.Navigate(new AdminPage());
+                        }
+                        else
+                        {
+                            ShowMessage.ErrMessage("Неправильный логин или пароль!");
+                            NavigationService.Navigate(new CaptchaPage());
+                        }
                     }
                     else
                     {
@@ -83,18 +101,6 @@ namespace WSR_Medical.Pages
             catch
             {
                 ShowMessage.ErrMessage("Что-то пошло не так...");
-            }
-
-
-
-            if (WindowWithFrame.employee != null)
-            {
-                NavigationService.Navigate(new AdminPage());
-            }
-            else
-            {
-                ShowMessage.ErrMessage("Неправильный логин или пароль!");
-                NavigationService.Navigate(new CaptchaPage());
             }
         }
 

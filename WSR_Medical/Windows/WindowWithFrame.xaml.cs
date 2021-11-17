@@ -47,6 +47,15 @@ namespace WSR_Medical.Windows
             {
                 dispatcherTimer.Stop();
             }
+
+            if(MainFrame.Content is CaptchaPage)
+            {
+                ExitBtn.IsEnabled = false;
+            }
+            else
+            {
+                ExitBtn.IsEnabled = true;
+            }
            
         }
 
