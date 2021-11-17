@@ -20,31 +20,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <ComboBox Width="230" Height="45"/>
-            <ComboBox Width="230" Height="45" Grid.Column="1"/>
+            <ComboBox x:Name="LoginCB" DisplayMemberPath="Login" SelectionChanged="LoginCB_SelectionChanged" Width="230" Height="45"/>
+            <ComboBox x:Name="DateCB" SelectionChanged="DateCB_SelectionChanged" Width="230" Height="45" Grid.Column="1"/>
         </Grid>
 
-        <ListBox Grid.Row="1" x:Name="HistoryList">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="{Binding Date}"/>
-                        <TextBlock Text="{Binding Login}" Grid.Column="1"/>
-                        <CheckBox IsChecked="{Binding isSuccessfull}" Grid.Column="2" VerticalAlignment="Center"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" x:Name="HistoryList" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата входа" Binding="{Binding Date}" Width="*"/>
+                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="*"/>
+                <DataGridCheckBoxColumn Width="*" Header="Попытка входа" Binding="{Binding isSuccessfull}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>
