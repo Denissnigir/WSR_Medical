@@ -146,6 +146,9 @@
     <Compile Include="Pages\LaborantPage.xaml.cs">
       <DependentUpon>LaborantPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SignInHistory.xaml.cs">
+      <DependentUpon>SignInHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\LaborantPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SignInHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

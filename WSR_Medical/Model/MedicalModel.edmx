@@ -58,7 +58,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" />
           <Property Name="Login" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="isSuccessfull" Type="bit" Nullable="false" />
@@ -521,7 +521,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" />
           <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="isSuccessfull" Type="Boolean" Nullable="false" />

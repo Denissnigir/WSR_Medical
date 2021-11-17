@@ -16,6 +16,7 @@ using WSR_Medical.Windows;
 using WSR_Medical.Model;
 using WSR_Medical.Utils;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace WSR_Medical.Pages
 {
@@ -32,7 +33,9 @@ namespace WSR_Medical.Pages
             SignInBtn.IsEnabled = !isLocked;
             if (isLocked)
             {
-                ShowMessage.InfMessage("Вход заблокирован на 1 минуту!");
+                new Thread(() => {
+                    ShowMessage.InfMessage("Вход заблокирован на 1 минуту!");
+                }).Start();
                 dispatcherTimer = new DispatcherTimer();
                 dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
                 dispatcherTimer.Tick += timerTick;
@@ -46,6 +49,7 @@ namespace WSR_Medical.Pages
             if(timerCounter >= new TimeSpan(0, 1, 0))
             {
                 ShowMessage.InfMessage("Теперь вы можете войти!");
+                timerCounter = TimeSpan.FromSeconds(0);
                 dispatcherTimer.Stop();
                 NavigationService.Navigate(new SignInPage(false));
             }
@@ -53,6 +57,7 @@ namespace WSR_Medical.Pages
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
+            EmployeeEnterArchive employeeEnterArchive = new EmployeeEnterArchive();
             try
             {
                 if ((bool)ShowPasswordCB.IsChecked)
@@ -62,13 +67,22 @@ namespace WSR_Medical.Pages
                         WindowWithFrame.employee = Context._con.Employee.Where(p => p.Login == LoginTB.Text && p.Password == PasswordTB.Text).FirstOrDefault();
                         if (WindowWithFrame.employee != null)
                         {
+                            employeeEnterArchive.Date = DateTime.Now;
+                            employeeEnterArchive.EmployeeId = WindowWithFrame.employee.Id;
+                            employeeEnterArchive.isSuccessfull = true;
+                            employeeEnterArchive.Login = LoginTB.Text;
                             NavigationService.Navigate(new AdminPage());
                         }
                         else
                         {
+                            employeeEnterArchive.Date = DateTime.Now;
+                            employeeEnterArchive.isSuccessfull = false;
+                            employeeEnterArchive.Login = LoginTB.Text;
                             ShowMessage.ErrMessage("Неправильный логин или пароль!");
                             NavigationService.Navigate(new CaptchaPage());
                         }
+                        Context._con.EmployeeEnterArchive.Add(employeeEnterArchive);
+                        Context._con.SaveChanges();
                     }
                     else
                     {
@@ -83,19 +97,29 @@ namespace WSR_Medical.Pages
                         WindowWithFrame.employee = Context._con.Employee.Where(p => p.Login == LoginTB.Text && p.Password == PasswordPB.Password).FirstOrDefault();
                         if (WindowWithFrame.employee != null)
                         {
+                            employeeEnterArchive.Date = DateTime.Now;
+                            employeeEnterArchive.EmployeeId = WindowWithFrame.employee.Id;
+                            employeeEnterArchive.isSuccessfull = true;
+                            employeeEnterArchive.Login = LoginTB.Text;
                             NavigationService.Navigate(new AdminPage());
                         }
                         else
                         {
+                            employeeEnterArchive.Date = DateTime.Now;
+                            employeeEnterArchive.isSuccessfull = false;
+                            employeeEnterArchive.Login = LoginTB.Text;
                             ShowMessage.ErrMessage("Неправильный логин или пароль!");
                             NavigationService.Navigate(new CaptchaPage());
                         }
+                        Context._con.EmployeeEnterArchive.Add(employeeEnterArchive);
+                        Context._con.SaveChanges();
                     }
                     else
                     {
                         ShowMessage.ErrMessage("Введите данные!");
                     }
                 }
+
 
             }
             catch

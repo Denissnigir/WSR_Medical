@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,6 +33,8 @@ namespace WSR_Medical.Windows
             InitializeComponent();
             dispatcherTimer = new DispatcherTimer();
             MainFrame.Navigate(new SignInPage());
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+            dispatcherTimer.Tick += timerTick;
             MainFrame.Navigated += checkPage;
         }
 
@@ -39,8 +42,6 @@ namespace WSR_Medical.Windows
         {
             if (!(MainFrame.Content is SignInPage) && !(MainFrame.Content is CaptchaPage))
             {
-                dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
-                dispatcherTimer.Tick += timerTick;
                 dispatcherTimer.Start();
             }
             else
@@ -48,7 +49,7 @@ namespace WSR_Medical.Windows
                 dispatcherTimer.Stop();
             }
 
-            if(MainFrame.Content is CaptchaPage)
+            if (MainFrame.Content is CaptchaPage)
             {
                 ExitBtn.IsEnabled = false;
             }
@@ -56,12 +57,12 @@ namespace WSR_Medical.Windows
             {
                 ExitBtn.IsEnabled = true;
             }
-           
+
         }
 
         private void Exit(object sender, RoutedEventArgs e)
         {
-            if(MainFrame.Content is SignInPage)
+            if (MainFrame.Content is SignInPage)
             {
                 Application.Current.Shutdown();
             }
@@ -75,12 +76,17 @@ namespace WSR_Medical.Windows
         private void timerTick(object sender, EventArgs e)
         {
             timerCounter += TimeSpan.FromSeconds(1);
-            if (timerCounter == new TimeSpan(0, 0, 5))
+            Console.WriteLine(timerCounter.ToString());
+            if (timerCounter == new TimeSpan(0, 5, 10))
             {
-                ShowMessage.InfMessage("До конца сессии осталось 5 минут!");
+                new Thread(() =>
+                {
+                    ShowMessage.InfMessage("До конца сессии осталось 5 минут!");
+                }).Start();
             }
-            else if (timerCounter >= new TimeSpan(0, 0, 10))
+            else if (timerCounter >= new TimeSpan(0, 10, 0))
             {
+                timerCounter = TimeSpan.FromSeconds(0);
                 dispatcherTimer.Stop();
                 MainFrame.Navigate(new SignInPage(true));
             }

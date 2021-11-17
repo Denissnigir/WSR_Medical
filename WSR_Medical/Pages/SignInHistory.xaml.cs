@@ -12,33 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WSR_Medical.Windows;
 using WSR_Medical.Model;
-using System.IO;
-using System.Windows.Threading;
-using WSR_Medical.Utils;
 
 namespace WSR_Medical.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для AdminPage.xaml
+    /// Логика взаимодействия для SignInHistory.xaml
     /// </summary>
-    public partial class AdminPage : Page
+    public partial class SignInHistory : Page
     {
-        DispatcherTimer dispatcherTimer;
-        TimeSpan timerCounter;
-
-        public AdminPage()
+        public SignInHistory()
         {
             InitializeComponent();
-            MainGrid.DataContext = WindowWithFrame.employee;
-
-        }
-
-
-        private void ToSignInHistory(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new SignInHistory());
+            HistoryList.ItemsSource = Context._con.EmployeeEnterArchive.ToList();
         }
     }
 }

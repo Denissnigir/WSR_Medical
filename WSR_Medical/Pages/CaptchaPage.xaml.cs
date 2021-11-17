@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,7 +47,7 @@ namespace WSR_Medical.Pages
             }
             else
             {
-                ShowMessage.ErrMessage("Вы заблокированы на 10 секунд!");
+                new Thread(() => { ShowMessage.ErrMessage("Вы заблокированы на 10 секунд!"); }).Start();
                 SubmitBtn.IsEnabled = false;
                 dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
                 dispatcherTimer.Tick += timerTick;
@@ -61,6 +62,7 @@ namespace WSR_Medical.Pages
             {
                 ShowMessage.InfMessage("Теперь вы можете снова попробовать!");
                 SubmitBtn.IsEnabled = true;
+                timerCounter = TimeSpan.FromSeconds(0);
                 dispatcherTimer.Stop();
                 
             }

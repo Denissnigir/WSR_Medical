@@ -16,6 +16,7 @@ namespace WSR_Medical.Utils
 
         public static void InfMessage(string message)
         {
+            
             MessageBox.Show(message, "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
