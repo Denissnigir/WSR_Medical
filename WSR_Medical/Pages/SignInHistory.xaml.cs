@@ -59,8 +59,6 @@ namespace WSR_Medical.Pages
                 default:
                     break;
             }
-
-
         }
 
         private void LoginCB_SelectionChanged(object sender, SelectionChangedEventArgs e)

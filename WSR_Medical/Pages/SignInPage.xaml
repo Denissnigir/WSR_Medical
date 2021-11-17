@@ -41,5 +41,7 @@
         </Grid>
 
         <Button x:Name="SignInBtn" Grid.Row="2" Height="35" Width="200" Content="Войти" Click="SignIn"/>
+        <TextBlock x:Name="TimerTB" HorizontalAlignment="Left" Margin="10" Grid.Row="2"/>
+
     </Grid>
 </Page>

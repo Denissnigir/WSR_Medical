@@ -76,7 +76,8 @@ namespace WSR_Medical.Windows
         private void timerTick(object sender, EventArgs e)
         {
             timerCounter += TimeSpan.FromSeconds(1);
-            Console.WriteLine(timerCounter.ToString());
+            string[] total = timerCounter.ToString().Split(':');
+            TimerTB.Text = $"{total[1]}:{total[2]}";
             if (timerCounter == new TimeSpan(0, 5, 10))
             {
                 new Thread(() =>

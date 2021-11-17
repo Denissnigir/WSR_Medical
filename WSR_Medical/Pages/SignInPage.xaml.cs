@@ -46,7 +46,9 @@ namespace WSR_Medical.Pages
         private void timerTick(object sender, EventArgs e)
         {
             timerCounter += TimeSpan.FromSeconds(1);
-            if(timerCounter >= new TimeSpan(0, 1, 0))
+            string[] total = timerCounter.ToString().Split(':');
+            TimerTB.Text = $"{total[1]}:{total[2]}";
+            if (timerCounter >= new TimeSpan(0, 1, 0))
             {
                 ShowMessage.InfMessage("Теперь вы можете войти!");
                 timerCounter = TimeSpan.FromSeconds(0);

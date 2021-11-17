@@ -30,7 +30,7 @@
         </Frame>
 
         <Grid Grid.Row="2" Background="#FF76E383">
-
+            <TextBlock x:Name="TimerTB"/>
         </Grid>
     </Grid>
 </Window>
