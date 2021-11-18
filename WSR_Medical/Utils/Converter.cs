@@ -9,5 +9,6 @@ namespace WSR_Medical.Utils
     public static class Converter
     {
         public static int ToInt(this object obj) => Convert.ToInt32(obj);
+
     }
 }

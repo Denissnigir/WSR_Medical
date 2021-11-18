@@ -27,7 +27,7 @@ namespace WSR_Medical.Model
         public string SecondName { get; set; }
         public string MiddleName { get; set; }
         public string Guid { get; set; }
-        public byte[] BirthDate { get; set; }
+        public long BirthDate { get; set; }
         public string PassportSerial { get; set; }
         public string PassportNumber { get; set; }
         public string Phone { get; set; }

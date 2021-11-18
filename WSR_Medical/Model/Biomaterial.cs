@@ -23,7 +23,7 @@ namespace WSR_Medical.Model
         public int Id { get; set; }
         public int PateintId { get; set; }
         public string Barcode { get; set; }
-        public byte[] Date { get; set; }
+        public long Date { get; set; }
     
         public virtual Patient Patient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

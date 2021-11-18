@@ -155,17 +155,24 @@
     <Compile Include="Pages\LaborantPage.xaml.cs">
       <DependentUpon>LaborantPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PrintPage.xaml.cs">
+      <DependentUpon>PrintPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SignInHistory.xaml.cs">
       <DependentUpon>SignInHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PartialClass\BiomaterialPartClass.cs" />
+    <Compile Include="PartialClass\OrderPartClass.cs" />
+    <Compile Include="PartialClass\PatientPartClass.cs" />
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utils\Levenshtein.cs" />
     <Compile Include="Utils\ShowMessage.cs" />
     <Compile Include="Windows\WindowWithFrame.xaml.cs">
       <DependentUpon>WindowWithFrame.xaml</DependentUpon>
@@ -246,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\LaborantPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PrintPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSR_Medical.Windows"
         mc:Ignorable="d"
-        Title="Медицинская лаборатория №20 г. Санкт-Петербурга" Icon="/WSR_Medical;component/Resources/Logo/logo.ico" Height="450" Width="800">
+        Title="Медицинская лаборатория №20 г. Санкт-Петербурга" Icon="/WSR_Medical;component/Resources/Logo/logo.ico" Height="650" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

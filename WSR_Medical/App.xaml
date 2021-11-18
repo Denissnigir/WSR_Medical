@@ -29,7 +29,22 @@
 
         <Style TargetType="ComboBox">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="ComboBox" x:Key="SmallText">
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Style.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="FontSize" Value="2"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="2"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="FontSize" Value="2"/>
+                </Style>
+            </Style.Resources>
         </Style>
     </Application.Resources>
 </Application>
