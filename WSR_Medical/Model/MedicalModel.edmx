@@ -39,6 +39,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PateintId" Type="int" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Date" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -284,15 +286,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Biomaterial1">
+        <Association Name="FK_Order_Biomaterial">
           <End Role="Biomaterial" Type="Self.Biomaterial" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Biomaterial">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="BiomaterialId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -422,7 +424,7 @@
             <End Role="Service" EntitySet="Service" />
             <End Role="EmployeeService" EntitySet="EmployeeService" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Biomaterial1" Association="Self.FK_Order_Biomaterial1">
+          <AssociationSet Name="FK_Order_Biomaterial" Association="Self.FK_Order_Biomaterial">
             <End Role="Biomaterial" EntitySet="Biomaterial" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
@@ -496,8 +498,10 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PateintId" Type="Int32" Nullable="false" />
+          <Property Name="Barcode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_Biomaterial_Patient" FromRole="Biomaterial" ToRole="Patient" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Biomaterial1" FromRole="Biomaterial" ToRole="Order" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Biomaterial" FromRole="Biomaterial" ToRole="Order" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -579,7 +583,7 @@
           <Property Name="BiomaterialId" Type="Int32" Nullable="false" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AnalyzerLog" Relationship="Self.FK_AnalyzerLog_Order" FromRole="Order" ToRole="AnalyzerLog" />
-          <NavigationProperty Name="Biomaterial" Relationship="Self.FK_Order_Biomaterial1" FromRole="Order" ToRole="Biomaterial" />
+          <NavigationProperty Name="Biomaterial" Relationship="Self.FK_Order_Biomaterial" FromRole="Order" ToRole="Biomaterial" />
           <NavigationProperty Name="OrderStatus" Relationship="Self.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatus" />
           <NavigationProperty Name="OrderService" Relationship="Self.FK_OrderService_Order" FromRole="Order" ToRole="OrderService" />
         </EntityType>
@@ -717,15 +721,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Biomaterial1">
+        <Association Name="FK_Order_Biomaterial">
           <End Role="Biomaterial" Type="Self.Biomaterial" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Biomaterial">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="BiomaterialId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -889,7 +893,7 @@
             <End Role="Patient" EntitySet="Patient" />
             <End Role="Biomaterial" EntitySet="Biomaterial" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Biomaterial1" Association="Self.FK_Order_Biomaterial1">
+          <AssociationSet Name="FK_Order_Biomaterial" Association="Self.FK_Order_Biomaterial">
             <End Role="Biomaterial" EntitySet="Biomaterial" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
@@ -976,6 +980,8 @@
               <MappingFragment StoreEntitySet="Biomaterial">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PateintId" ColumnName="PateintId" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

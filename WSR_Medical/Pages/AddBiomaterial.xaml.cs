@@ -12,35 +12,32 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WSR_Medical.Windows;
 using WSR_Medical.Model;
-using System.IO;
-using System.Windows.Threading;
-using WSR_Medical.Utils;
 
 namespace WSR_Medical.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для AdminPage.xaml
+    /// Логика взаимодействия для AddBiomaterial.xaml
     /// </summary>
-    public partial class AdminPage : Page
+    public partial class AddBiomaterial : Page
     {
-
-        public AdminPage()
+        public AddBiomaterial()
         {
             InitializeComponent();
-            MainGrid.DataContext = WindowWithFrame.employee;
         }
 
-
-        private void ToSignInHistory(object sender, RoutedEventArgs e)
+        private void AddPatient(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new SignInHistory());
+            NavigationService.Navigate(new AddPatient());
         }
 
-        private void FirstButton_Click(object sender, RoutedEventArgs e)
+        private void CheckBiomaterialNumber(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Barcode());
+            var biomat = Context._con.Biomaterial.Where(p => p.Barcode == BarcodeName.Text).FirstOrDefault();
+            if(biomat == null)
+            {
+                PatientGrid.Visibility = Visibility.Visible;
+            }
         }
     }
 }

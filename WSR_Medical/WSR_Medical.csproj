@@ -134,6 +134,12 @@
     <Compile Include="Pages\AccounterPage.xaml.cs">
       <DependentUpon>AccounterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AddBiomaterial.xaml.cs">
+      <DependentUpon>AddBiomaterial.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddPatient.xaml.cs">
+      <DependentUpon>AddPatient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
@@ -212,6 +218,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Pages\AccounterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddBiomaterial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddPatient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

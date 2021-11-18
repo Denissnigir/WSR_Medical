@@ -26,5 +26,10 @@
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Background" Value="#FF498C51"/>
         </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
     </Application.Resources>
 </Application>

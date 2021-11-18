@@ -74,7 +74,22 @@ namespace WSR_Medical.Pages
                             employeeEnterArchive.EmployeeId = WindowWithFrame.employee.Id;
                             employeeEnterArchive.isSuccessfull = true;
                             employeeEnterArchive.Login = LoginTB.Text;
-                            NavigationService.Navigate(new AdminPage());
+                            if(WindowWithFrame.employee.RoleId == 1)
+                            {
+                                NavigationService.Navigate(new LaborantPage());
+                            } 
+                            else if(WindowWithFrame.employee.RoleId == 2)
+                            {
+                                NavigationService.Navigate(new LaborantIsslPage());
+                            }
+                            else if (WindowWithFrame.employee.RoleId == 3)
+                            {
+                                NavigationService.Navigate(new AdminPage());
+                            }
+                            else if (WindowWithFrame.employee.RoleId == 4)
+                            {
+                                NavigationService.Navigate(new AccounterPage());
+                            }
                         }
                         else
                         {
@@ -104,7 +119,22 @@ namespace WSR_Medical.Pages
                             employeeEnterArchive.EmployeeId = WindowWithFrame.employee.Id;
                             employeeEnterArchive.isSuccessfull = true;
                             employeeEnterArchive.Login = LoginTB.Text;
-                            NavigationService.Navigate(new AdminPage());
+                            if (WindowWithFrame.employee.RoleId == 1)
+                            {
+                                NavigationService.Navigate(new LaborantPage());
+                            }
+                            else if (WindowWithFrame.employee.RoleId == 2)
+                            {
+                                NavigationService.Navigate(new LaborantIsslPage());
+                            }
+                            else if (WindowWithFrame.employee.RoleId == 3)
+                            {
+                                NavigationService.Navigate(new AdminPage());
+                            }
+                            else if (WindowWithFrame.employee.RoleId == 4)
+                            {
+                                NavigationService.Navigate(new AccounterPage());
+                            }
                         }
                         else
                         {

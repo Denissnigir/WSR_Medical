@@ -14,10 +14,19 @@ namespace WSR_Medical.Model
     
     public partial class Biomaterial
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Biomaterial()
+        {
+            this.Order = new HashSet<Order>();
+        }
+    
         public int Id { get; set; }
         public int PateintId { get; set; }
+        public string Barcode { get; set; }
+        public byte[] Date { get; set; }
     
         public virtual Patient Patient { get; set; }
-        public virtual Order Order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

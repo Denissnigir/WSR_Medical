@@ -49,7 +49,7 @@
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Button x:Name="FirstButton" Height="45" Width="300" Content="Сформировать отчёты"/>
-                <Button x:Name="SecondButton" Height="45" Width="300" Content="Принять биоматериал" Grid.Row="1"/>
+                <Button x:Name="SecondButton" Height="45" Width="300" Content="Принять биоматериал" Grid.Row="1" Click="TakeBiomaterial"/>
             </Grid>
         </Grid>
     </Grid>

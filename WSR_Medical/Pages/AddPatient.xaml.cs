@@ -12,24 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WSR_Medical.Windows;
 
 namespace WSR_Medical.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для LaborantPage.xaml
+    /// Логика взаимодействия для AddPatient.xaml
     /// </summary>
-    public partial class LaborantPage : Page
+    public partial class AddPatient : Page
     {
-        public LaborantPage()
+        public AddPatient()
         {
             InitializeComponent();
-            MainGrid.DataContext = WindowWithFrame.employee;
-        }
-
-        private void TakeBiomaterial(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new AddBiomaterial());
         }
     }
 }
