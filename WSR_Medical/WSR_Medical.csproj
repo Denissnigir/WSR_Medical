@@ -137,6 +137,9 @@
     <Compile Include="Pages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Barcode.xaml.cs">
+      <DependentUpon>Barcode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CaptchaPage.xaml.cs">
       <DependentUpon>CaptchaPage.xaml</DependentUpon>
     </Compile>
@@ -213,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Barcode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

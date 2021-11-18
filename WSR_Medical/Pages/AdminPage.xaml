@@ -49,7 +49,7 @@
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                <Button x:Name="FirstButton" Height="45" Width="300" Content="Сформировать отчёты"/>
+                <Button x:Name="FirstButton" Height="45" Width="300" Content="Сформировать отчёты" Click="FirstButton_Click"/>
                 <Button x:Name="SecondButton" Height="45" Width="300" Content="История входа" Grid.Row="1" Click="ToSignInHistory"/>
                 <Button x:Name="ThirdButton" Height="45" Width="300" Content="Данные о расходных материалах" Grid.Row="2"/>
             </Grid>

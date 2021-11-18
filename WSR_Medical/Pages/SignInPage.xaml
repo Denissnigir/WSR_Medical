@@ -22,7 +22,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Login:" HorizontalAlignment="Right" Margin="10"/>
-            <TextBox x:Name="LoginTB" Grid.Column="1" Height="35" Width="250" HorizontalAlignment="Left" Margin="10"/>
+            <TextBox KeyDown="LoginTB_KeyDown" x:Name="LoginTB" Grid.Column="1" Height="35" Width="250" HorizontalAlignment="Left" Margin="10"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -33,7 +33,7 @@
 
             <TextBlock Text="Password:" HorizontalAlignment="Right" Margin="10"/>
             <TextBox Visibility="Hidden" x:Name="PasswordTB" Grid.Column="1" Height="35" Width="250" HorizontalAlignment="Left" Margin="10"/>
-            <PasswordBox x:Name="PasswordPB" Grid.Column="1" Height="35" Width="250" HorizontalAlignment="Left" Margin="10"/>
+            <PasswordBox KeyDown="PasswordPB_KeyDown"  x:Name="PasswordPB" Grid.Column="1" Height="35" Width="250" HorizontalAlignment="Left" Margin="10"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Margin="10">
                 <CheckBox Unchecked="ShowPasswordCB_Unchecked" Checked="ShowPasswordCB_Checked"  x:Name="ShowPasswordCB" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
                 <TextBlock Text="Показать пароль" FontSize="18"/> 

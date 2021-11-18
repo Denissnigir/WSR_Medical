@@ -40,5 +40,10 @@ namespace WSR_Medical.Pages
         {
             NavigationService.Navigate(new SignInHistory());
         }
+
+        private void FirstButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Barcode());
+        }
     }
 }

@@ -30,6 +30,7 @@ namespace WSR_Medical.Pages
         public SignInPage(bool isLocked = false)
         {
             InitializeComponent();
+            LoginTB.Focus();
             SignInBtn.IsEnabled = !isLocked;
             if (isLocked)
             {
@@ -142,6 +143,22 @@ namespace WSR_Medical.Pages
             PasswordPB.Visibility = Visibility.Visible;
             PasswordPB.Password = PasswordTB.Text;
             PasswordTB.Visibility = Visibility.Hidden;
+        }
+
+        private void PasswordPB_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                this.SignIn(sender, e);
+            }
+        }
+
+        private void LoginTB_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                PasswordPB.Focus();
+            }
         }
     }
 }
