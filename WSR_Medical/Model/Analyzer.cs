@@ -18,6 +18,7 @@ namespace WSR_Medical.Model
         public Analyzer()
         {
             this.AnalyzerLog = new HashSet<AnalyzerLog>();
+            this.AnalyzerService = new HashSet<AnalyzerService>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace WSR_Medical.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnalyzerLog> AnalyzerLog { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AnalyzerService> AnalyzerService { get; set; }
     }
 }

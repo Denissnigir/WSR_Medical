@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -36,6 +37,27 @@ namespace WSR_Medical.Windows
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             dispatcherTimer.Tick += timerTick;
             MainFrame.Navigated += checkPage;
+            //ImportService();
+        }
+
+        private void ImportService()
+        {
+            var fileData = File.ReadAllLines(@"C:\Users\0dmin\Desktop\analyzerservice.txt");
+
+            foreach(var line in fileData)
+            {
+                var data = line.Split('\t');
+
+                foreach(var analyzerType in data[1].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var currentAnalyzer = Context._con.Analyzer.ToList().FirstOrDefault(p => p.Id == analyzerType.ToInt());
+                    if(currentAnalyzer != null)
+                    {
+                        Context._con.AnalyzerService.Add(new AnalyzerService { AnalyzerId = currentAnalyzer.Id, ServiceId = data[0].ToInt() });
+                    }
+                }
+                Context._con.SaveChanges();
+            }
         }
 
         private void checkPage(object sender, EventArgs e)

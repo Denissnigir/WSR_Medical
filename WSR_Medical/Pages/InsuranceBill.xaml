@@ -23,15 +23,15 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Период с"/>
-                <DatePicker Grid.Column="1" Height="35" Width="150"/>
+                <DatePicker SelectedDateChanged="FirstDateDP_SelectedDateChanged" Name="FirstDateDP" Grid.Column="1" Height="35" Width="150"/>
                 <TextBlock Text="По" Grid.Column="2"/>
-                <DatePicker Grid.Column="3" Height="35" Width="150"/>
+                <DatePicker SelectedDateChanged="SecondDateDP_SelectedDateChanged" Name="SecondDateDP" Grid.Column="3" Height="35" Width="150"/>
             </Grid>
         </Grid>
 
         <Grid Grid.Row="1">
 
-            <DataGrid Name="BillList" AutoGenerateColumns="False">
+            <DataGrid Name="BillList" IsReadOnly="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название организации" Binding="{Binding Patient.InsuranceCompany.Name}" Width="*"/>
                     <DataGridTextColumn Header="ФИО" Binding="{Binding Patient.GetName}" Width="*"/>

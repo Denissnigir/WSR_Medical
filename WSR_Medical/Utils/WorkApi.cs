@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WSR_Medical.Model
+namespace WSR_Medical.Utils
 {
-    public static class Context
+    public static class WorkApi
     {
-        public static user41Entities _con = new user41Entities();
+        
     }
 }

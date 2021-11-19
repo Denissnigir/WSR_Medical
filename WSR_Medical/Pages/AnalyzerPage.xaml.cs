@@ -12,24 +12,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WSR_Medical.Windows;
 
 namespace WSR_Medical.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для LaborantIsslPage.xaml
+    /// Логика взаимодействия для AnalyzerPage.xaml
     /// </summary>
-    public partial class LaborantIsslPage : Page
+    public partial class AnalyzerPage : Page
     {
-        public LaborantIsslPage()
+        public AnalyzerPage()
         {
             InitializeComponent();
-            MainGrid.DataContext = WindowWithFrame.employee;
         }
 
-        private void ToAnalyzers(object sender, RoutedEventArgs e)
+        private void ToLedetect(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AnalyzerPage());
+            NavigationService.Navigate(new LedetectPage());
+        }
+
+        private void ToBiorad(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new BioradPage());
         }
     }
 }

@@ -23,19 +23,25 @@ namespace WSR_Medical.Pages
     /// </summary>
     public partial class InsuranceBill : Page
     {
+        List<Biomaterial> biomaterials = new List<Biomaterial>();
         public InsuranceBill()
         {
             InitializeComponent();
-            BillList.ItemsSource = Context._con.Biomaterial.Where(p => p.Order.Any()).ToList();
             totalPrice.Text = Context._con.Biomaterial.ToList().Sum(i=>i.GetTotalPrice).ToString();
+            Filter();
         }
 
         private void PrintToCsv(object sender, RoutedEventArgs e)
         {
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = "info.csv";
             saveFileDialog.Filter = ".csv | *.csv ";
-            var biomaterials = Context._con.Biomaterial.ToList().Select(p => $"{p.Patient.InsuranceCompany.Name};{p.Patient.GetName};{p.GetServices};{p.GetPrice};{p.GetTotalPrice}").ToList();
+            var biomaterials = Context._con.Biomaterial.Where(p => p.Order.Any()).ToList().Select(p => $"{p.Patient.InsuranceCompany.Name};{p.Patient.GetName};{p.GetServices};{p.GetPrice};{p.GetTotalPrice}").ToList();
+            if (FirstDateDP.SelectedDate != null && SecondDateDP.SelectedDate != null)
+            {
+                biomaterials = Context._con.Biomaterial.Where(p => p.Order.FirstOrDefault().DateStart >= FirstDateDP.SelectedDate && p.Order.FirstOrDefault().DateStart <= SecondDateDP.SelectedDate).ToList().Select(p => $"{p.Patient.InsuranceCompany.Name};{p.Patient.GetName};{p.GetServices};{p.GetPrice};{p.GetTotalPrice}").ToList();
+            }
             biomaterials.Add(Context._con.Biomaterial.ToList().Sum(i => i.GetTotalPrice).ToString());
             if ((bool)saveFileDialog.ShowDialog())
             {
@@ -45,7 +51,28 @@ namespace WSR_Medical.Pages
 
         private void PrintToPdf(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PdfPrintPage());
+            NavigationService.Navigate(new PdfPrintPage(FirstDateDP.SelectedDate, SecondDateDP.SelectedDate));
+        }
+
+        private void Filter()
+        {
+            biomaterials = Context._con.Biomaterial.Where(p => p.Order.Any()).ToList();
+            if (FirstDateDP.SelectedDate != null && SecondDateDP.SelectedDate != null)
+            {
+                biomaterials = biomaterials.Where(p => p.Order.FirstOrDefault().DateStart >= FirstDateDP.SelectedDate && p.Order.FirstOrDefault().DateStart <= SecondDateDP.SelectedDate).ToList();
+                
+            }
+            BillList.ItemsSource = biomaterials;
+        }
+
+        private void FirstDateDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Filter();
+        }
+
+        private void SecondDateDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Filter();
         }
     }
 }

@@ -70,6 +70,9 @@
     <Compile Include="Model\AnalyzerLog.cs">
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\AnalyzerService.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\AnalyzerStatus.cs">
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
@@ -128,9 +131,6 @@
     <Compile Include="Model\ServiceStatus.cs">
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\sysdiagrams.cs">
-      <DependentUpon>MedicalModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Pages\AccounterPage.xaml.cs">
       <DependentUpon>AccounterPage.xaml</DependentUpon>
     </Compile>
@@ -143,8 +143,14 @@
     <Compile Include="Pages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AnalyzerPage.xaml.cs">
+      <DependentUpon>AnalyzerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Barcode.xaml.cs">
       <DependentUpon>Barcode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BioradPage.xaml.cs">
+      <DependentUpon>BioradPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CaptchaPage.xaml.cs">
       <DependentUpon>CaptchaPage.xaml</DependentUpon>
@@ -157,6 +163,9 @@
     </Compile>
     <Compile Include="Pages\LaborantPage.xaml.cs">
       <DependentUpon>LaborantPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LedetectPage.xaml.cs">
+      <DependentUpon>LedetectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PdfPrintPage.xaml.cs">
       <DependentUpon>PdfPrintPage.xaml</DependentUpon>
@@ -179,7 +188,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utils\Levenshtein.cs" />
+    <Compile Include="Utils\Serializer.cs" />
     <Compile Include="Utils\ShowMessage.cs" />
+    <Compile Include="Utils\WorkApi.cs" />
     <Compile Include="Windows\WindowWithFrame.xaml.cs">
       <DependentUpon>WindowWithFrame.xaml</DependentUpon>
     </Compile>
@@ -246,7 +257,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\AnalyzerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Barcode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BioradPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -263,6 +282,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\LaborantPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LedetectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -298,6 +321,10 @@
       <DependentUpon>MedicalModel.edmx</DependentUpon>
       <LastGenOutput>MedicalModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Pages\loader %281%29.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Resources\Photo\loader %281%29.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,10 +21,10 @@ namespace WSR_Medical.Pages
     /// </summary>
     public partial class PdfPrintPage : Page
     {
-        public PdfPrintPage()
+        public PdfPrintPage(DateTime? startDate, DateTime? endDate)
         {
             InitializeComponent();
-            BillList.ItemsSource = Context._con.Biomaterial.ToList();
+            BillList.ItemsSource = Context._con.Biomaterial.Where(p => p.Order.FirstOrDefault().DateStart >= startDate && p.Order.FirstOrDefault().DateStart <= endDate).ToList();
             totalPrice.Text = Context._con.Biomaterial.ToList().Sum(i => i.GetTotalPrice).ToString();
         }
 

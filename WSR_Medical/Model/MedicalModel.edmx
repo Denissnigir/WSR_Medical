@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище WSR_MedicalModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище user41Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Analyzer">
           <Key>
             <PropertyRef Name="Id" />
@@ -25,6 +25,14 @@
           <Property Name="Finished" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="Accepted" Type="bit" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AnalyzerService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnalyzerId" Type="int" Nullable="false" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AnalyzerStatus">
           <Key>
@@ -166,16 +174,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <Association Name="FK_AnalyzerLog_Analyzer">
           <End Role="Analyzer" Type="Self.Analyzer" Multiplicity="1" />
           <End Role="AnalyzerLog" Type="Self.AnalyzerLog" Multiplicity="*" />
@@ -221,6 +219,30 @@
             </Principal>
             <Dependent Role="AnalyzerLog">
               <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnalyzerService_Analyzer">
+          <End Role="Analyzer" Type="Self.Analyzer" Multiplicity="1" />
+          <End Role="AnalyzerService" Type="Self.AnalyzerService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Analyzer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnalyzerService">
+              <PropertyRef Name="AnalyzerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnalyzerService_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="AnalyzerService" Type="Self.AnalyzerService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnalyzerService">
+              <PropertyRef Name="ServiceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -370,9 +392,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище WSR_MedicalModelContainer">
+        <EntityContainer Name="Хранилище user41ModelContainer">
           <EntitySet Name="Analyzer" EntityType="Self.Analyzer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnalyzerLog" EntityType="Self.AnalyzerLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnalyzerService" EntityType="Self.AnalyzerService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnalyzerStatus" EntityType="Self.AnalyzerStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Biomaterial" EntityType="Self.Biomaterial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
@@ -387,7 +410,6 @@
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceStatus" EntityType="Self.ServiceStatus" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AnalyzerLog_Analyzer" Association="Self.FK_AnalyzerLog_Analyzer">
             <End Role="Analyzer" EntitySet="Analyzer" />
             <End Role="AnalyzerLog" EntitySet="AnalyzerLog" />
@@ -403,6 +425,14 @@
           <AssociationSet Name="FK_AnalyzerLog_Order" Association="Self.FK_AnalyzerLog_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="AnalyzerLog" EntitySet="AnalyzerLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnalyzerService_Analyzer" Association="Self.FK_AnalyzerService_Analyzer">
+            <End Role="Analyzer" EntitySet="Analyzer" />
+            <End Role="AnalyzerService" EntitySet="AnalyzerService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnalyzerService_Service" Association="Self.FK_AnalyzerService_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="AnalyzerService" EntitySet="AnalyzerService" />
           </AssociationSet>
           <AssociationSet Name="FK_Biomaterial_Patient" Association="Self.FK_Biomaterial_Patient">
             <End Role="Patient" EntitySet="Patient" />
@@ -456,86 +486,94 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="WSR_MedicalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="WSR_MedicalEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Analyzer" EntityType="WSR_MedicalModel.Analyzer" />
-          <EntitySet Name="AnalyzerLog" EntityType="WSR_MedicalModel.AnalyzerLog" />
-          <EntitySet Name="AnalyzerStatus" EntityType="WSR_MedicalModel.AnalyzerStatus" />
-          <EntitySet Name="Biomaterial" EntityType="WSR_MedicalModel.Biomaterial" />
-          <EntitySet Name="Employee" EntityType="WSR_MedicalModel.Employee" />
-          <EntitySet Name="EmployeeEnterArchive" EntityType="WSR_MedicalModel.EmployeeEnterArchive" />
-          <EntitySet Name="EmployeeRole" EntityType="WSR_MedicalModel.EmployeeRole" />
-          <EntitySet Name="EmployeeService" EntityType="WSR_MedicalModel.EmployeeService" />
-          <EntitySet Name="InsuranceCompany" EntityType="WSR_MedicalModel.InsuranceCompany" />
-          <EntitySet Name="InsuranceType" EntityType="WSR_MedicalModel.InsuranceType" />
-          <EntitySet Name="Order" EntityType="WSR_MedicalModel.Order" />
-          <EntitySet Name="OrderService" EntityType="WSR_MedicalModel.OrderService" />
-          <EntitySet Name="OrderStatus" EntityType="WSR_MedicalModel.OrderStatus" />
-          <EntitySet Name="Patient" EntityType="WSR_MedicalModel.Patient" />
-          <EntitySet Name="Service" EntityType="WSR_MedicalModel.Service" />
-          <EntitySet Name="ServiceStatus" EntityType="WSR_MedicalModel.ServiceStatus" />
-          <EntitySet Name="sysdiagrams" EntityType="WSR_MedicalModel.sysdiagrams" />
-          <AssociationSet Name="FK_AnalyzerLog_Analyzer" Association="WSR_MedicalModel.FK_AnalyzerLog_Analyzer">
+      <Schema Namespace="user41Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="user41Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Analyzer" EntityType="user41Model.Analyzer" />
+          <EntitySet Name="AnalyzerLog" EntityType="user41Model.AnalyzerLog" />
+          <EntitySet Name="AnalyzerService" EntityType="user41Model.AnalyzerService" />
+          <EntitySet Name="AnalyzerStatus" EntityType="user41Model.AnalyzerStatus" />
+          <EntitySet Name="Biomaterial" EntityType="user41Model.Biomaterial" />
+          <EntitySet Name="Employee" EntityType="user41Model.Employee" />
+          <EntitySet Name="EmployeeEnterArchive" EntityType="user41Model.EmployeeEnterArchive" />
+          <EntitySet Name="EmployeeRole" EntityType="user41Model.EmployeeRole" />
+          <EntitySet Name="EmployeeService" EntityType="user41Model.EmployeeService" />
+          <EntitySet Name="InsuranceCompany" EntityType="user41Model.InsuranceCompany" />
+          <EntitySet Name="InsuranceType" EntityType="user41Model.InsuranceType" />
+          <EntitySet Name="Order" EntityType="user41Model.Order" />
+          <EntitySet Name="OrderService" EntityType="user41Model.OrderService" />
+          <EntitySet Name="OrderStatus" EntityType="user41Model.OrderStatus" />
+          <EntitySet Name="Patient" EntityType="user41Model.Patient" />
+          <EntitySet Name="Service" EntityType="user41Model.Service" />
+          <EntitySet Name="ServiceStatus" EntityType="user41Model.ServiceStatus" />
+          <AssociationSet Name="FK_AnalyzerLog_Analyzer" Association="user41Model.FK_AnalyzerLog_Analyzer">
             <End Role="Analyzer" EntitySet="Analyzer" />
             <End Role="AnalyzerLog" EntitySet="AnalyzerLog" />
           </AssociationSet>
-          <AssociationSet Name="FK_AnalyzerLog_AnalyzerStatus" Association="WSR_MedicalModel.FK_AnalyzerLog_AnalyzerStatus">
+          <AssociationSet Name="FK_AnalyzerService_Analyzer" Association="user41Model.FK_AnalyzerService_Analyzer">
+            <End Role="Analyzer" EntitySet="Analyzer" />
+            <End Role="AnalyzerService" EntitySet="AnalyzerService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnalyzerLog_AnalyzerStatus" Association="user41Model.FK_AnalyzerLog_AnalyzerStatus">
             <End Role="AnalyzerStatus" EntitySet="AnalyzerStatus" />
             <End Role="AnalyzerLog" EntitySet="AnalyzerLog" />
           </AssociationSet>
-          <AssociationSet Name="FK_AnalyzerLog_Employee" Association="WSR_MedicalModel.FK_AnalyzerLog_Employee">
+          <AssociationSet Name="FK_AnalyzerLog_Employee" Association="user41Model.FK_AnalyzerLog_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="AnalyzerLog" EntitySet="AnalyzerLog" />
           </AssociationSet>
-          <AssociationSet Name="FK_AnalyzerLog_Order" Association="WSR_MedicalModel.FK_AnalyzerLog_Order">
+          <AssociationSet Name="FK_AnalyzerLog_Order" Association="user41Model.FK_AnalyzerLog_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="AnalyzerLog" EntitySet="AnalyzerLog" />
           </AssociationSet>
-          <AssociationSet Name="FK_Biomaterial_Patient" Association="WSR_MedicalModel.FK_Biomaterial_Patient">
+          <AssociationSet Name="FK_AnalyzerService_Service" Association="user41Model.FK_AnalyzerService_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="AnalyzerService" EntitySet="AnalyzerService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Biomaterial_Patient" Association="user41Model.FK_Biomaterial_Patient">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="Biomaterial" EntitySet="Biomaterial" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Biomaterial" Association="WSR_MedicalModel.FK_Order_Biomaterial">
+          <AssociationSet Name="FK_Order_Biomaterial" Association="user41Model.FK_Order_Biomaterial">
             <End Role="Biomaterial" EntitySet="Biomaterial" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_EmployeeRole" Association="WSR_MedicalModel.FK_Employee_EmployeeRole">
+          <AssociationSet Name="FK_Employee_EmployeeRole" Association="user41Model.FK_Employee_EmployeeRole">
             <End Role="EmployeeRole" EntitySet="EmployeeRole" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeEnterArchive_Employee" Association="WSR_MedicalModel.FK_EmployeeEnterArchive_Employee">
+          <AssociationSet Name="FK_EmployeeEnterArchive_Employee" Association="user41Model.FK_EmployeeEnterArchive_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeEnterArchive" EntitySet="EmployeeEnterArchive" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeService_Employee" Association="WSR_MedicalModel.FK_EmployeeService_Employee">
+          <AssociationSet Name="FK_EmployeeService_Employee" Association="user41Model.FK_EmployeeService_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeService" EntitySet="EmployeeService" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeService_Service" Association="WSR_MedicalModel.FK_EmployeeService_Service">
+          <AssociationSet Name="FK_EmployeeService_Service" Association="user41Model.FK_EmployeeService_Service">
             <End Role="Service" EntitySet="Service" />
             <End Role="EmployeeService" EntitySet="EmployeeService" />
           </AssociationSet>
-          <AssociationSet Name="FK_Patient_InsuranceCompany" Association="WSR_MedicalModel.FK_Patient_InsuranceCompany">
+          <AssociationSet Name="FK_Patient_InsuranceCompany" Association="user41Model.FK_Patient_InsuranceCompany">
             <End Role="InsuranceCompany" EntitySet="InsuranceCompany" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
-          <AssociationSet Name="FK_Patient_InsuranceType" Association="WSR_MedicalModel.FK_Patient_InsuranceType">
+          <AssociationSet Name="FK_Patient_InsuranceType" Association="user41Model.FK_Patient_InsuranceType">
             <End Role="InsuranceType" EntitySet="InsuranceType" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_OrderStatus" Association="WSR_MedicalModel.FK_Order_OrderStatus">
+          <AssociationSet Name="FK_Order_OrderStatus" Association="user41Model.FK_Order_OrderStatus">
             <End Role="OrderStatus" EntitySet="OrderStatus" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderService_Order" Association="WSR_MedicalModel.FK_OrderService_Order">
+          <AssociationSet Name="FK_OrderService_Order" Association="user41Model.FK_OrderService_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="OrderService" EntitySet="OrderService" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderService_Service" Association="WSR_MedicalModel.FK_OrderService_Service">
+          <AssociationSet Name="FK_OrderService_Service" Association="user41Model.FK_OrderService_Service">
             <End Role="Service" EntitySet="Service" />
             <End Role="OrderService" EntitySet="OrderService" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderService_ServiceStatus" Association="WSR_MedicalModel.FK_OrderService_ServiceStatus">
+          <AssociationSet Name="FK_OrderService_ServiceStatus" Association="user41Model.FK_OrderService_ServiceStatus">
             <End Role="ServiceStatus" EntitySet="ServiceStatus" />
             <End Role="OrderService" EntitySet="OrderService" />
           </AssociationSet>
@@ -546,7 +584,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AnalyzerLog" Relationship="WSR_MedicalModel.FK_AnalyzerLog_Analyzer" FromRole="Analyzer" ToRole="AnalyzerLog" />
+          <NavigationProperty Name="AnalyzerLog" Relationship="user41Model.FK_AnalyzerLog_Analyzer" FromRole="Analyzer" ToRole="AnalyzerLog" />
+          <NavigationProperty Name="AnalyzerService" Relationship="user41Model.FK_AnalyzerService_Analyzer" FromRole="Analyzer" ToRole="AnalyzerService" />
         </EntityType>
         <EntityType Name="AnalyzerLog">
           <Key>
@@ -561,10 +600,20 @@
           <Property Name="Finished" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Accepted" Type="Boolean" Nullable="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Analyzer" Relationship="WSR_MedicalModel.FK_AnalyzerLog_Analyzer" FromRole="AnalyzerLog" ToRole="Analyzer" />
-          <NavigationProperty Name="AnalyzerStatus" Relationship="WSR_MedicalModel.FK_AnalyzerLog_AnalyzerStatus" FromRole="AnalyzerLog" ToRole="AnalyzerStatus" />
-          <NavigationProperty Name="Employee" Relationship="WSR_MedicalModel.FK_AnalyzerLog_Employee" FromRole="AnalyzerLog" ToRole="Employee" />
-          <NavigationProperty Name="Order" Relationship="WSR_MedicalModel.FK_AnalyzerLog_Order" FromRole="AnalyzerLog" ToRole="Order" />
+          <NavigationProperty Name="Analyzer" Relationship="user41Model.FK_AnalyzerLog_Analyzer" FromRole="AnalyzerLog" ToRole="Analyzer" />
+          <NavigationProperty Name="AnalyzerStatus" Relationship="user41Model.FK_AnalyzerLog_AnalyzerStatus" FromRole="AnalyzerLog" ToRole="AnalyzerStatus" />
+          <NavigationProperty Name="Employee" Relationship="user41Model.FK_AnalyzerLog_Employee" FromRole="AnalyzerLog" ToRole="Employee" />
+          <NavigationProperty Name="Order" Relationship="user41Model.FK_AnalyzerLog_Order" FromRole="AnalyzerLog" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="AnalyzerService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnalyzerId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Analyzer" Relationship="user41Model.FK_AnalyzerService_Analyzer" FromRole="AnalyzerService" ToRole="Analyzer" />
+          <NavigationProperty Name="Service" Relationship="user41Model.FK_AnalyzerService_Service" FromRole="AnalyzerService" ToRole="Service" />
         </EntityType>
         <EntityType Name="AnalyzerStatus">
           <Key>
@@ -572,7 +621,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AnalyzerLog" Relationship="WSR_MedicalModel.FK_AnalyzerLog_AnalyzerStatus" FromRole="AnalyzerStatus" ToRole="AnalyzerLog" />
+          <NavigationProperty Name="AnalyzerLog" Relationship="user41Model.FK_AnalyzerLog_AnalyzerStatus" FromRole="AnalyzerStatus" ToRole="AnalyzerLog" />
         </EntityType>
         <EntityType Name="Biomaterial">
           <Key>
@@ -582,8 +631,8 @@
           <Property Name="PateintId" Type="Int32" Nullable="false" />
           <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Patient" Relationship="WSR_MedicalModel.FK_Biomaterial_Patient" FromRole="Biomaterial" ToRole="Patient" />
-          <NavigationProperty Name="Order" Relationship="WSR_MedicalModel.FK_Order_Biomaterial" FromRole="Biomaterial" ToRole="Order" />
+          <NavigationProperty Name="Patient" Relationship="user41Model.FK_Biomaterial_Patient" FromRole="Biomaterial" ToRole="Patient" />
+          <NavigationProperty Name="Order" Relationship="user41Model.FK_Order_Biomaterial" FromRole="Biomaterial" ToRole="Order" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -598,10 +647,10 @@
           <Property Name="Ip" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Lastenter" Type="DateTime" Precision="0" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AnalyzerLog" Relationship="WSR_MedicalModel.FK_AnalyzerLog_Employee" FromRole="Employee" ToRole="AnalyzerLog" />
-          <NavigationProperty Name="EmployeeRole" Relationship="WSR_MedicalModel.FK_Employee_EmployeeRole" FromRole="Employee" ToRole="EmployeeRole" />
-          <NavigationProperty Name="EmployeeEnterArchive" Relationship="WSR_MedicalModel.FK_EmployeeEnterArchive_Employee" FromRole="Employee" ToRole="EmployeeEnterArchive" />
-          <NavigationProperty Name="EmployeeService" Relationship="WSR_MedicalModel.FK_EmployeeService_Employee" FromRole="Employee" ToRole="EmployeeService" />
+          <NavigationProperty Name="AnalyzerLog" Relationship="user41Model.FK_AnalyzerLog_Employee" FromRole="Employee" ToRole="AnalyzerLog" />
+          <NavigationProperty Name="EmployeeRole" Relationship="user41Model.FK_Employee_EmployeeRole" FromRole="Employee" ToRole="EmployeeRole" />
+          <NavigationProperty Name="EmployeeEnterArchive" Relationship="user41Model.FK_EmployeeEnterArchive_Employee" FromRole="Employee" ToRole="EmployeeEnterArchive" />
+          <NavigationProperty Name="EmployeeService" Relationship="user41Model.FK_EmployeeService_Employee" FromRole="Employee" ToRole="EmployeeService" />
         </EntityType>
         <EntityType Name="EmployeeEnterArchive">
           <Key>
@@ -612,7 +661,7 @@
           <Property Name="Login" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="isSuccessfull" Type="Boolean" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="WSR_MedicalModel.FK_EmployeeEnterArchive_Employee" FromRole="EmployeeEnterArchive" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="user41Model.FK_EmployeeEnterArchive_Employee" FromRole="EmployeeEnterArchive" ToRole="Employee" />
         </EntityType>
         <EntityType Name="EmployeeRole">
           <Key>
@@ -620,7 +669,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employee" Relationship="WSR_MedicalModel.FK_Employee_EmployeeRole" FromRole="EmployeeRole" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="user41Model.FK_Employee_EmployeeRole" FromRole="EmployeeRole" ToRole="Employee" />
         </EntityType>
         <EntityType Name="EmployeeService">
           <Key>
@@ -629,8 +678,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="ServiceId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="WSR_MedicalModel.FK_EmployeeService_Employee" FromRole="EmployeeService" ToRole="Employee" />
-          <NavigationProperty Name="Service" Relationship="WSR_MedicalModel.FK_EmployeeService_Service" FromRole="EmployeeService" ToRole="Service" />
+          <NavigationProperty Name="Employee" Relationship="user41Model.FK_EmployeeService_Employee" FromRole="EmployeeService" ToRole="Employee" />
+          <NavigationProperty Name="Service" Relationship="user41Model.FK_EmployeeService_Service" FromRole="EmployeeService" ToRole="Service" />
         </EntityType>
         <EntityType Name="InsuranceCompany">
           <Key>
@@ -644,7 +693,7 @@
           <Property Name="Pc" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Bik" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Ua" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Patient" Relationship="WSR_MedicalModel.FK_Patient_InsuranceCompany" FromRole="InsuranceCompany" ToRole="Patient" />
+          <NavigationProperty Name="Patient" Relationship="user41Model.FK_Patient_InsuranceCompany" FromRole="InsuranceCompany" ToRole="Patient" />
         </EntityType>
         <EntityType Name="InsuranceType">
           <Key>
@@ -652,7 +701,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Patient" Relationship="WSR_MedicalModel.FK_Patient_InsuranceType" FromRole="InsuranceType" ToRole="Patient" />
+          <NavigationProperty Name="Patient" Relationship="user41Model.FK_Patient_InsuranceType" FromRole="InsuranceType" ToRole="Patient" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -664,10 +713,10 @@
           <Property Name="Deadline" Type="Int32" />
           <Property Name="BiomaterialId" Type="Int32" Nullable="false" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AnalyzerLog" Relationship="WSR_MedicalModel.FK_AnalyzerLog_Order" FromRole="Order" ToRole="AnalyzerLog" />
-          <NavigationProperty Name="Biomaterial" Relationship="WSR_MedicalModel.FK_Order_Biomaterial" FromRole="Order" ToRole="Biomaterial" />
-          <NavigationProperty Name="OrderStatus" Relationship="WSR_MedicalModel.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatus" />
-          <NavigationProperty Name="OrderService" Relationship="WSR_MedicalModel.FK_OrderService_Order" FromRole="Order" ToRole="OrderService" />
+          <NavigationProperty Name="AnalyzerLog" Relationship="user41Model.FK_AnalyzerLog_Order" FromRole="Order" ToRole="AnalyzerLog" />
+          <NavigationProperty Name="Biomaterial" Relationship="user41Model.FK_Order_Biomaterial" FromRole="Order" ToRole="Biomaterial" />
+          <NavigationProperty Name="OrderStatus" Relationship="user41Model.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatus" />
+          <NavigationProperty Name="OrderService" Relationship="user41Model.FK_OrderService_Order" FromRole="Order" ToRole="OrderService" />
         </EntityType>
         <EntityType Name="OrderService">
           <Key>
@@ -677,9 +726,9 @@
           <Property Name="ServiceId" Type="Int32" Nullable="false" />
           <Property Name="OrderId" Type="Int32" Nullable="false" />
           <Property Name="StatusId" Type="Int32" />
-          <NavigationProperty Name="Order" Relationship="WSR_MedicalModel.FK_OrderService_Order" FromRole="OrderService" ToRole="Order" />
-          <NavigationProperty Name="Service" Relationship="WSR_MedicalModel.FK_OrderService_Service" FromRole="OrderService" ToRole="Service" />
-          <NavigationProperty Name="ServiceStatus" Relationship="WSR_MedicalModel.FK_OrderService_ServiceStatus" FromRole="OrderService" ToRole="ServiceStatus" />
+          <NavigationProperty Name="Order" Relationship="user41Model.FK_OrderService_Order" FromRole="OrderService" ToRole="Order" />
+          <NavigationProperty Name="Service" Relationship="user41Model.FK_OrderService_Service" FromRole="OrderService" ToRole="Service" />
+          <NavigationProperty Name="ServiceStatus" Relationship="user41Model.FK_OrderService_ServiceStatus" FromRole="OrderService" ToRole="ServiceStatus" />
         </EntityType>
         <EntityType Name="OrderStatus">
           <Key>
@@ -687,7 +736,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Order" Relationship="WSR_MedicalModel.FK_Order_OrderStatus" FromRole="OrderStatus" ToRole="Order" />
+          <NavigationProperty Name="Order" Relationship="user41Model.FK_Order_OrderStatus" FromRole="OrderStatus" ToRole="Order" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -709,9 +758,9 @@
           <Property Name="InsuranceTypeId" Type="Int32" Nullable="false" />
           <Property Name="InsuranceCompanyId" Type="Int32" Nullable="false" />
           <Property Name="Ein" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Biomaterial" Relationship="WSR_MedicalModel.FK_Biomaterial_Patient" FromRole="Patient" ToRole="Biomaterial" />
-          <NavigationProperty Name="InsuranceCompany" Relationship="WSR_MedicalModel.FK_Patient_InsuranceCompany" FromRole="Patient" ToRole="InsuranceCompany" />
-          <NavigationProperty Name="InsuranceType" Relationship="WSR_MedicalModel.FK_Patient_InsuranceType" FromRole="Patient" ToRole="InsuranceType" />
+          <NavigationProperty Name="Biomaterial" Relationship="user41Model.FK_Biomaterial_Patient" FromRole="Patient" ToRole="Biomaterial" />
+          <NavigationProperty Name="InsuranceCompany" Relationship="user41Model.FK_Patient_InsuranceCompany" FromRole="Patient" ToRole="InsuranceCompany" />
+          <NavigationProperty Name="InsuranceType" Relationship="user41Model.FK_Patient_InsuranceType" FromRole="Patient" ToRole="InsuranceType" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
@@ -722,8 +771,9 @@
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="Deadline" Type="Int32" />
           <Property Name="AverageError" Type="Double" />
-          <NavigationProperty Name="EmployeeService" Relationship="WSR_MedicalModel.FK_EmployeeService_Service" FromRole="Service" ToRole="EmployeeService" />
-          <NavigationProperty Name="OrderService" Relationship="WSR_MedicalModel.FK_OrderService_Service" FromRole="Service" ToRole="OrderService" />
+          <NavigationProperty Name="AnalyzerService" Relationship="user41Model.FK_AnalyzerService_Service" FromRole="Service" ToRole="AnalyzerService" />
+          <NavigationProperty Name="EmployeeService" Relationship="user41Model.FK_EmployeeService_Service" FromRole="Service" ToRole="EmployeeService" />
+          <NavigationProperty Name="OrderService" Relationship="user41Model.FK_OrderService_Service" FromRole="Service" ToRole="OrderService" />
         </EntityType>
         <EntityType Name="ServiceStatus">
           <Key>
@@ -731,21 +781,11 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="OrderService" Relationship="WSR_MedicalModel.FK_OrderService_ServiceStatus" FromRole="ServiceStatus" ToRole="OrderService" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="OrderService" Relationship="user41Model.FK_OrderService_ServiceStatus" FromRole="ServiceStatus" ToRole="OrderService" />
         </EntityType>
         <Association Name="FK_AnalyzerLog_Analyzer">
-          <End Type="WSR_MedicalModel.Analyzer" Role="Analyzer" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.AnalyzerLog" Role="AnalyzerLog" Multiplicity="*" />
+          <End Type="user41Model.Analyzer" Role="Analyzer" Multiplicity="1" />
+          <End Type="user41Model.AnalyzerLog" Role="AnalyzerLog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Analyzer">
               <PropertyRef Name="Id" />
@@ -755,9 +795,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AnalyzerService_Analyzer">
+          <End Type="user41Model.Analyzer" Role="Analyzer" Multiplicity="1" />
+          <End Type="user41Model.AnalyzerService" Role="AnalyzerService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Analyzer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnalyzerService">
+              <PropertyRef Name="AnalyzerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AnalyzerLog_AnalyzerStatus">
-          <End Type="WSR_MedicalModel.AnalyzerStatus" Role="AnalyzerStatus" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.AnalyzerLog" Role="AnalyzerLog" Multiplicity="*" />
+          <End Type="user41Model.AnalyzerStatus" Role="AnalyzerStatus" Multiplicity="1" />
+          <End Type="user41Model.AnalyzerLog" Role="AnalyzerLog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AnalyzerStatus">
               <PropertyRef Name="Id" />
@@ -768,8 +820,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AnalyzerLog_Employee">
-          <End Type="WSR_MedicalModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.AnalyzerLog" Role="AnalyzerLog" Multiplicity="*" />
+          <End Type="user41Model.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="user41Model.AnalyzerLog" Role="AnalyzerLog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Id" />
@@ -780,8 +832,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AnalyzerLog_Order">
-          <End Type="WSR_MedicalModel.Order" Role="Order" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.AnalyzerLog" Role="AnalyzerLog" Multiplicity="*" />
+          <End Type="user41Model.Order" Role="Order" Multiplicity="1" />
+          <End Type="user41Model.AnalyzerLog" Role="AnalyzerLog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
               <PropertyRef Name="Id" />
@@ -791,9 +843,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AnalyzerService_Service">
+          <End Type="user41Model.Service" Role="Service" Multiplicity="1" />
+          <End Type="user41Model.AnalyzerService" Role="AnalyzerService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnalyzerService">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Biomaterial_Patient">
-          <End Type="WSR_MedicalModel.Patient" Role="Patient" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.Biomaterial" Role="Biomaterial" Multiplicity="*" />
+          <End Type="user41Model.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="user41Model.Biomaterial" Role="Biomaterial" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
               <PropertyRef Name="Id" />
@@ -804,8 +868,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Biomaterial">
-          <End Type="WSR_MedicalModel.Biomaterial" Role="Biomaterial" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.Order" Role="Order" Multiplicity="*" />
+          <End Type="user41Model.Biomaterial" Role="Biomaterial" Multiplicity="1" />
+          <End Type="user41Model.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Biomaterial">
               <PropertyRef Name="Id" />
@@ -816,8 +880,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Employee_EmployeeRole">
-          <End Type="WSR_MedicalModel.EmployeeRole" Role="EmployeeRole" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="user41Model.EmployeeRole" Role="EmployeeRole" Multiplicity="1" />
+          <End Type="user41Model.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EmployeeRole">
               <PropertyRef Name="Id" />
@@ -828,8 +892,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmployeeEnterArchive_Employee">
-          <End Type="WSR_MedicalModel.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="WSR_MedicalModel.EmployeeEnterArchive" Role="EmployeeEnterArchive" Multiplicity="*" />
+          <End Type="user41Model.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="user41Model.EmployeeEnterArchive" Role="EmployeeEnterArchive" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Id" />
@@ -840,10 +904,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmployeeService_Employee">
-          <End Type="WSR_MedicalModel.Employee" Role="Employee" Multiplicity="1">
+          <End Type="user41Model.Employee" Role="Employee" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="WSR_MedicalModel.EmployeeService" Role="EmployeeService" Multiplicity="*" />
+          <End Type="user41Model.EmployeeService" Role="EmployeeService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Id" />
@@ -854,8 +918,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmployeeService_Service">
-          <End Type="WSR_MedicalModel.Service" Role="Service" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.EmployeeService" Role="EmployeeService" Multiplicity="*" />
+          <End Type="user41Model.Service" Role="Service" Multiplicity="1" />
+          <End Type="user41Model.EmployeeService" Role="EmployeeService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Service">
               <PropertyRef Name="Id" />
@@ -866,8 +930,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Patient_InsuranceCompany">
-          <End Type="WSR_MedicalModel.InsuranceCompany" Role="InsuranceCompany" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.Patient" Role="Patient" Multiplicity="*" />
+          <End Type="user41Model.InsuranceCompany" Role="InsuranceCompany" Multiplicity="1" />
+          <End Type="user41Model.Patient" Role="Patient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InsuranceCompany">
               <PropertyRef Name="Id" />
@@ -878,8 +942,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Patient_InsuranceType">
-          <End Type="WSR_MedicalModel.InsuranceType" Role="InsuranceType" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.Patient" Role="Patient" Multiplicity="*" />
+          <End Type="user41Model.InsuranceType" Role="InsuranceType" Multiplicity="1" />
+          <End Type="user41Model.Patient" Role="Patient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InsuranceType">
               <PropertyRef Name="Id" />
@@ -890,8 +954,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_OrderStatus">
-          <End Type="WSR_MedicalModel.OrderStatus" Role="OrderStatus" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.Order" Role="Order" Multiplicity="*" />
+          <End Type="user41Model.OrderStatus" Role="OrderStatus" Multiplicity="1" />
+          <End Type="user41Model.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OrderStatus">
               <PropertyRef Name="Id" />
@@ -902,8 +966,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderService_Order">
-          <End Type="WSR_MedicalModel.Order" Role="Order" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.OrderService" Role="OrderService" Multiplicity="*" />
+          <End Type="user41Model.Order" Role="Order" Multiplicity="1" />
+          <End Type="user41Model.OrderService" Role="OrderService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
               <PropertyRef Name="Id" />
@@ -914,8 +978,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderService_Service">
-          <End Type="WSR_MedicalModel.Service" Role="Service" Multiplicity="1" />
-          <End Type="WSR_MedicalModel.OrderService" Role="OrderService" Multiplicity="*" />
+          <End Type="user41Model.Service" Role="Service" Multiplicity="1" />
+          <End Type="user41Model.OrderService" Role="OrderService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Service">
               <PropertyRef Name="Id" />
@@ -926,8 +990,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderService_ServiceStatus">
-          <End Type="WSR_MedicalModel.ServiceStatus" Role="ServiceStatus" Multiplicity="0..1" />
-          <End Type="WSR_MedicalModel.OrderService" Role="OrderService" Multiplicity="*" />
+          <End Type="user41Model.ServiceStatus" Role="ServiceStatus" Multiplicity="0..1" />
+          <End Type="user41Model.OrderService" Role="OrderService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceStatus">
               <PropertyRef Name="Id" />
@@ -942,9 +1006,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище WSR_MedicalModelContainer" CdmEntityContainer="WSR_MedicalEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище user41ModelContainer" CdmEntityContainer="user41Entities">
           <EntitySetMapping Name="Analyzer">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.Analyzer">
+            <EntityTypeMapping TypeName="user41Model.Analyzer">
               <MappingFragment StoreEntitySet="Analyzer">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -952,7 +1016,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AnalyzerLog">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.AnalyzerLog">
+            <EntityTypeMapping TypeName="user41Model.AnalyzerLog">
               <MappingFragment StoreEntitySet="AnalyzerLog">
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="Accepted" ColumnName="Accepted" />
@@ -966,8 +1030,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AnalyzerService">
+            <EntityTypeMapping TypeName="user41Model.AnalyzerService">
+              <MappingFragment StoreEntitySet="AnalyzerService">
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="AnalyzerId" ColumnName="AnalyzerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AnalyzerStatus">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.AnalyzerStatus">
+            <EntityTypeMapping TypeName="user41Model.AnalyzerStatus">
               <MappingFragment StoreEntitySet="AnalyzerStatus">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -975,7 +1048,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Biomaterial">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.Biomaterial">
+            <EntityTypeMapping TypeName="user41Model.Biomaterial">
               <MappingFragment StoreEntitySet="Biomaterial">
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
@@ -985,7 +1058,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.Employee">
+            <EntityTypeMapping TypeName="user41Model.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Lastenter" ColumnName="Lastenter" />
@@ -1000,7 +1073,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeEnterArchive">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.EmployeeEnterArchive">
+            <EntityTypeMapping TypeName="user41Model.EmployeeEnterArchive">
               <MappingFragment StoreEntitySet="EmployeeEnterArchive">
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="isSuccessfull" ColumnName="isSuccessfull" />
@@ -1011,7 +1084,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeRole">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.EmployeeRole">
+            <EntityTypeMapping TypeName="user41Model.EmployeeRole">
               <MappingFragment StoreEntitySet="EmployeeRole">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1019,7 +1092,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeService">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.EmployeeService">
+            <EntityTypeMapping TypeName="user41Model.EmployeeService">
               <MappingFragment StoreEntitySet="EmployeeService">
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -1028,7 +1101,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InsuranceCompany">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.InsuranceCompany">
+            <EntityTypeMapping TypeName="user41Model.InsuranceCompany">
               <MappingFragment StoreEntitySet="InsuranceCompany">
                 <ScalarProperty Name="Ua" ColumnName="Ua" />
                 <ScalarProperty Name="Bik" ColumnName="Bik" />
@@ -1042,7 +1115,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InsuranceType">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.InsuranceType">
+            <EntityTypeMapping TypeName="user41Model.InsuranceType">
               <MappingFragment StoreEntitySet="InsuranceType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1050,7 +1123,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.Order">
+            <EntityTypeMapping TypeName="user41Model.Order">
               <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="BiomaterialId" ColumnName="BiomaterialId" />
@@ -1062,7 +1135,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderService">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.OrderService">
+            <EntityTypeMapping TypeName="user41Model.OrderService">
               <MappingFragment StoreEntitySet="OrderService">
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -1072,7 +1145,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderStatus">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.OrderStatus">
+            <EntityTypeMapping TypeName="user41Model.OrderStatus">
               <MappingFragment StoreEntitySet="OrderStatus">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1080,7 +1153,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Patient">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.Patient">
+            <EntityTypeMapping TypeName="user41Model.Patient">
               <MappingFragment StoreEntitySet="Patient">
                 <ScalarProperty Name="Ein" ColumnName="Ein" />
                 <ScalarProperty Name="InsuranceCompanyId" ColumnName="InsuranceCompanyId" />
@@ -1102,7 +1175,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Service">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.Service">
+            <EntityTypeMapping TypeName="user41Model.Service">
               <MappingFragment StoreEntitySet="Service">
                 <ScalarProperty Name="AverageError" ColumnName="AverageError" />
                 <ScalarProperty Name="Deadline" ColumnName="Deadline" />
@@ -1113,21 +1186,10 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ServiceStatus">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.ServiceStatus">
+            <EntityTypeMapping TypeName="user41Model.ServiceStatus">
               <MappingFragment StoreEntitySet="ServiceStatus">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="WSR_MedicalModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

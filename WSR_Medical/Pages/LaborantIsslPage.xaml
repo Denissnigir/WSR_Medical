@@ -47,7 +47,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                <Button x:Name="FirstButton" Height="45" Width="300" Content="Работать с анализатором"/>
+                <Button x:Name="FirstButton" Height="45" Width="300" Content="Работать с анализатором" Click="ToAnalyzers"/>
             </Grid>
         </Grid>
     </Grid>

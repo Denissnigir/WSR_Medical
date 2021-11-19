@@ -13,10 +13,10 @@ namespace WSR_Medical.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class WSR_MedicalEntities : DbContext
+    public partial class user41Entities : DbContext
     {
-        public WSR_MedicalEntities()
-            : base("name=WSR_MedicalEntities")
+        public user41Entities()
+            : base("name=user41Entities")
         {
         }
     
@@ -27,6 +27,7 @@ namespace WSR_Medical.Model
     
         public virtual DbSet<Analyzer> Analyzer { get; set; }
         public virtual DbSet<AnalyzerLog> AnalyzerLog { get; set; }
+        public virtual DbSet<AnalyzerService> AnalyzerService { get; set; }
         public virtual DbSet<AnalyzerStatus> AnalyzerStatus { get; set; }
         public virtual DbSet<Biomaterial> Biomaterial { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
@@ -41,6 +42,5 @@ namespace WSR_Medical.Model
         public virtual DbSet<Patient> Patient { get; set; }
         public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<ServiceStatus> ServiceStatus { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }
