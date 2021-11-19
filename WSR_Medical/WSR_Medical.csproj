@@ -158,6 +158,9 @@
     <Compile Include="Pages\LaborantPage.xaml.cs">
       <DependentUpon>LaborantPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PdfPrintPage.xaml.cs">
+      <DependentUpon>PdfPrintPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PrintPage.xaml.cs">
       <DependentUpon>PrintPage.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\LaborantPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PdfPrintPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

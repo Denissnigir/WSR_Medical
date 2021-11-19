@@ -34,11 +34,18 @@ namespace WSR_Medical.Pages
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = "info.csv";
-            saveFileDialog.Filter = ".csv | .csv";
+            saveFileDialog.Filter = ".csv | *.csv ";
+            var biomaterials = Context._con.Biomaterial.ToList().Select(p => $"{p.Patient.InsuranceCompany.Name};{p.Patient.GetName};{p.GetServices};{p.GetPrice}").ToList();
+            biomaterials.Add(Context._con.Biomaterial.ToList().Sum(i => i.GetTotalPrice).ToString());
             if ((bool)saveFileDialog.ShowDialog())
             {
-                File.WriteAllLines(saveFileDialog.FileName, Context._con.Biomaterial.ToList().Select(p => $"{p.Patient.InsuranceCompany.Name};{p.Patient.GetName};{p.GetServices};{p.GetPrice}"), Encoding.Unicode);
+                File.WriteAllLines(saveFileDialog.FileName, biomaterials, Encoding.Unicode);
             }
+        }
+
+        private void PrintToPdf(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PdfPrintPage());
         }
     }
 }
