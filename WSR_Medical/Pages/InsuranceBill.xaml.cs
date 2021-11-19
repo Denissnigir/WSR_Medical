@@ -26,7 +26,7 @@ namespace WSR_Medical.Pages
         public InsuranceBill()
         {
             InitializeComponent();
-            BillList.ItemsSource = Context._con.Biomaterial.ToList();
+            BillList.ItemsSource = Context._con.Biomaterial.Where(p => p.Order.Any()).ToList();
             totalPrice.Text = Context._con.Biomaterial.ToList().Sum(i=>i.GetTotalPrice).ToString();
         }
 
@@ -35,7 +35,7 @@ namespace WSR_Medical.Pages
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = "info.csv";
             saveFileDialog.Filter = ".csv | *.csv ";
-            var biomaterials = Context._con.Biomaterial.ToList().Select(p => $"{p.Patient.InsuranceCompany.Name};{p.Patient.GetName};{p.GetServices};{p.GetPrice}").ToList();
+            var biomaterials = Context._con.Biomaterial.ToList().Select(p => $"{p.Patient.InsuranceCompany.Name};{p.Patient.GetName};{p.GetServices};{p.GetPrice};{p.GetTotalPrice}").ToList();
             biomaterials.Add(Context._con.Biomaterial.ToList().Sum(i => i.GetTotalPrice).ToString());
             if ((bool)saveFileDialog.ShowDialog())
             {

@@ -19,7 +19,7 @@ namespace WSR_Medical.Model
                     {
                         result += ", ";
                     }
-                    result += x.Service.Name;
+                    result += $"{x.Service.Name} - {x.Service.Price} руб.";
 
                 }
                 return result;

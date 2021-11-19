@@ -18,7 +18,7 @@
                             <DataGridTextColumn Header="Название организации" Binding="{Binding Patient.InsuranceCompany.Name}" Width="*"/>
                             <DataGridTextColumn Header="ФИО" Binding="{Binding Patient.GetName}" Width="*"/>
                             <DataGridTextColumn Header="Услуги" Binding="{Binding GetServices}" Width="*"/>
-                            <DataGridTextColumn Header="Цены услуг" Binding="{Binding GetPrice}" Width="*"/>
+                            <DataGridTextColumn Header="Цены услуг по клиенту" Binding="{Binding GetTotalPrice}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
