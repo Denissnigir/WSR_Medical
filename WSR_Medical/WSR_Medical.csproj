@@ -149,6 +149,9 @@
     <Compile Include="Pages\CaptchaPage.xaml.cs">
       <DependentUpon>CaptchaPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\InsuranceBill.xaml.cs">
+      <DependentUpon>InsuranceBill.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LaborantIsslPage.xaml.cs">
       <DependentUpon>LaborantIsslPage.xaml</DependentUpon>
     </Compile>
@@ -245,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\CaptchaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\InsuranceBill.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

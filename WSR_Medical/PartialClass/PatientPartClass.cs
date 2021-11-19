@@ -17,5 +17,14 @@ namespace WSR_Medical.Model
                 return fullName;
             }
         }
+
+        public string GetServices
+        {
+            get
+            {
+
+                return Biomaterial.FirstOrDefault().GetServices;
+            }
+        }
     }
 }

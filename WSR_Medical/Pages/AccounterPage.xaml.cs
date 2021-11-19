@@ -24,5 +24,10 @@ namespace WSR_Medical.Pages
         {
             InitializeComponent();
         }
+
+        private void CreateInsuranceBill(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new InsuranceBill());
+        }
     }
 }

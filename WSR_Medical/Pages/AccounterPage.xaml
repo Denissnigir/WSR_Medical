@@ -49,7 +49,7 @@
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Button x:Name="FirstButton" Height="45" Width="300" Content="Просмотреть отчёты"/>
-                <Button x:Name="SecondButton" Grid.Row="1" Height="45" Width="300">
+                <Button x:Name="SecondButton" Grid.Row="1" Height="45" Width="300" Click="CreateInsuranceBill">
                     <TextBlock Text="Сформировать счет страховой компании" TextWrapping="Wrap" TextAlignment="Center" FontSize="18"/>
                 </Button>
             </Grid>

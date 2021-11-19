@@ -31,5 +31,6 @@ namespace WSR_Medical.Pages
         {
             NavigationService.Navigate(new AddBiomaterial());
         }
+
     }
 }

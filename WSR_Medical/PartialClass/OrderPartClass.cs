@@ -19,12 +19,36 @@ namespace WSR_Medical.Model
                     {
                         result += ", ";
                     }
-                    Console.WriteLine(x.Service.Name);
                     result += x.Service.Name;
 
                 }
-                Console.WriteLine(OrderService.Count);
                 return result;
+            }
+        }
+
+        public string GetPrice
+        {
+            get
+            {
+                string result = string.Empty;
+                foreach (var x in Context._con.OrderService.Where(p => p.OrderId == Id).ToList())
+                {
+                    if (!string.IsNullOrWhiteSpace(result))
+                    {
+                        result += ", ";
+                    }
+                    result += x.Service.Price;
+
+                }
+                return result;
+            }
+        }
+
+        public decimal GetTotalPrice
+        {
+            get
+            {
+                return Context._con.OrderService.Where(p => p.OrderId == Id).Sum(i => i.Service.Price);
             }
         }
     }

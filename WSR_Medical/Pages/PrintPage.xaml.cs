@@ -23,12 +23,20 @@ namespace WSR_Medical.Pages
     /// </summary>
     public partial class PrintPage : Page
     {
+        private Biomaterial curBiomat;
+        private int curPrice;
         public PrintPage(Biomaterial biomaterial, int price)
         {
             InitializeComponent();
-            MainGrid.DataContext = biomaterial;
+            curBiomat = biomaterial;
+            curPrice = price;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainGrid.DataContext = curBiomat;
             DateTB.Text = Convert.ToString(DateTime.Now);
-            PriceTB.Text = Convert.ToString(price);
+            PriceTB.Text = Convert.ToString(curPrice);
             BirthDateTB.Text = Convert.ToString(DateTime.Now);
 
             PrintDialog printDialog = new PrintDialog();
@@ -38,8 +46,9 @@ namespace WSR_Medical.Pages
             }
 
 
-            ShowMessage.InfMessage("Успешно добавлено!");
+
             NavigationService.Navigate(new LaborantPage());
+
         }
     }
 }

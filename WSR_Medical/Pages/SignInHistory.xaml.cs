@@ -37,6 +37,8 @@ namespace WSR_Medical.Pages
             DateCB.ItemsSource = dateList;
             DateCB.SelectedIndex = 0;
             Filter();
+
+            
         }
 
         public void Filter()
@@ -70,5 +72,6 @@ namespace WSR_Medical.Pages
         {
             Filter();
         }
+
     }
 }
