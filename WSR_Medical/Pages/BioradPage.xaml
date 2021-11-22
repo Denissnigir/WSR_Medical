@@ -14,14 +14,36 @@
                 <RowDefinition/>
                 <RowDefinition Height="0.2*"/>
             </Grid.RowDefinitions>
-
             <DataGrid AutoGenerateColumns="False" IsReadOnly="True" Name="ServiceList">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Невыполненные услуги" Binding="{Binding Service.Name}" Width="*"/>
+                    <DataGridTextColumn Header="Процент выполнения" Binding="{Binding Procent}" Width="*"/>
+                    <DataGridTemplateColumn Width="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Loaded="Image_Loaded" Source="loader (1).gif" Height="50">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding StatusId}" Value="2">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding StatusId}" Value="1">
+                                                    <Setter Property="Visibility" Value="Hidden"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <Image x:Name="POD" Loaded="Image_Loaded" Source="loader (1).gif" Height="50" Visibility="Hidden">
+            </Image>
 
-            <Button Grid.Row="1" Height="45" Width="300" Content="Отправить на исследование"/>
+            <Button Grid.Row="1" Height="45" Width="300" Content="Отправить на исследование" Click="SendService"/>
         </Grid>
     </Grid>
 </Page>

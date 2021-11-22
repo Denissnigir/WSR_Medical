@@ -30,10 +30,7 @@ namespace WSR_Medical.Pages
             InitializeComponent();
             curBiomat = biomaterial;
             curPrice = price;
-        }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
             MainGrid.DataContext = curBiomat;
             DateTB.Text = Convert.ToString(DateTime.Now);
             PriceTB.Text = Convert.ToString(curPrice);
@@ -45,10 +42,12 @@ namespace WSR_Medical.Pages
                 printDialog.PrintVisual((Visual)MainGrid, "desc");
             }
 
+            new Thread(() => { ShowMessage.InfMessage("Согласен, добавил!"); }).Start();
+        }
 
-
-            NavigationService.Navigate(new LaborantPage());
-
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+           NavigationService.Navigate(new LaborantPage());
         }
     }
 }

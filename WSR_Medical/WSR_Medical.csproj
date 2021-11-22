@@ -41,6 +41,7 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -131,6 +132,9 @@
     <Compile Include="Model\ServiceStatus.cs">
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\sysdiagrams.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AccounterPage.xaml.cs">
       <DependentUpon>AccounterPage.xaml</DependentUpon>
     </Compile>
@@ -181,6 +185,7 @@
     </Compile>
     <Compile Include="PartialClass\BiomaterialPartClass.cs" />
     <Compile Include="PartialClass\OrderPartClass.cs" />
+    <Compile Include="PartialClass\OrderSevicePartClass.cs" />
     <Compile Include="PartialClass\PatientPartClass.cs" />
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="App.xaml.cs">

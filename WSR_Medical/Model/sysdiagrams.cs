@@ -12,21 +12,12 @@ namespace WSR_Medical.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class AnalyzerLog
+    public partial class sysdiagrams
     {
-        public int Id { get; set; }
-        public int AnalyzerId { get; set; }
-        public int EmployeeId { get; set; }
-        public int OrderId { get; set; }
-        public System.DateTime ServiceDate { get; set; }
-        public double Result { get; set; }
-        public System.DateTime Finished { get; set; }
-        public bool Accepted { get; set; }
-        public int StatusId { get; set; }
-    
-        public virtual Analyzer Analyzer { get; set; }
-        public virtual AnalyzerStatus AnalyzerStatus { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual Order Order { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

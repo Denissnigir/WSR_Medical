@@ -30,7 +30,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding Service.Name}"/>
                         <TextBlock Text="{Binding Service.Status.Name}" Grid.Column="1"/>
-                        <Image Source="loader (1).gif"/>
+                        <Image Source="loader (1).gif" Grid.Column="2"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

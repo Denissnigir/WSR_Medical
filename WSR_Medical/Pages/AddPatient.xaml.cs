@@ -40,8 +40,7 @@ namespace WSR_Medical.Pages
             InsuranceTypeCB.SelectedIndex = 0;
             InsuranceNameCB.SelectedIndex = 0;
 
-            ShowMessage.InfMessage("Пациент зарегестрирован!");
-            NavigationService.Navigate(new AddBiomaterial());
+            
         }
 
         private void AddPatientClick(object sender, RoutedEventArgs e)
@@ -51,6 +50,9 @@ namespace WSR_Medical.Pages
             patient.BirthDate = ticks;
             Context._con.Patient.Add(patient);
             Context._con.SaveChanges();
+
+            ShowMessage.InfMessage("Пациент зарегестрирован!");
+            NavigationService.Navigate(new AddBiomaterial());
         }
     }
 }

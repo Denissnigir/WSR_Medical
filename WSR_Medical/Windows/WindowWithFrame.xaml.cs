@@ -32,6 +32,7 @@ namespace WSR_Medical.Windows
         public WindowWithFrame()
         {
             InitializeComponent();
+
             dispatcherTimer = new DispatcherTimer();
             MainFrame.Navigate(new SignInPage());
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);

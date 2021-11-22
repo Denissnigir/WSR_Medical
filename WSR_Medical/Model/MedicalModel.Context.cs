@@ -42,5 +42,6 @@ namespace WSR_Medical.Model
         public virtual DbSet<Patient> Patient { get; set; }
         public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<ServiceStatus> ServiceStatus { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

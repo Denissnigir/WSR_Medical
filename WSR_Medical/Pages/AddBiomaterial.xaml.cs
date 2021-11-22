@@ -149,7 +149,7 @@ namespace WSR_Medical.Pages
 
         private void FirstNameCB_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            var patients = Context._con.Patient.ToList().Where(p => Levenshtein.GetLev(SecondNameCB.Text, p.SecondName));
+            var patients = Context._con.Patient.ToList().Where(p => Levenshtein.GetLev(FirstNameCB.Text, p.FirstName));
             SecondNameCB.ItemsSource = patients;
             FirstNameCB.ItemsSource = patients;
             MiddleNameCB.ItemsSource = patients;

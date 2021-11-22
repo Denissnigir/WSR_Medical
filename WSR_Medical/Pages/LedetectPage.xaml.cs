@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using WSR_Medical.Model;
 using WSR_Medical.Utils;
 
+
 namespace WSR_Medical.Pages
 {
     /// <summary>
@@ -24,8 +25,6 @@ namespace WSR_Medical.Pages
     /// </summary>
     public partial class LedetectPage : Page
     {
-        public static readonly HttpClient httpClient = new HttpClient();
-
         string api = "http://localhost:5000/api/analyzer/Ledetect";
 
         public LedetectPage()
@@ -70,5 +69,6 @@ namespace WSR_Medical.Pages
     public class responceService
     {
         public int serviceCode { get; set; }
+        public string result { get; set; } = null;
     }
 }
