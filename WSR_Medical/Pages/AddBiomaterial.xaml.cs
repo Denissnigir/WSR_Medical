@@ -44,10 +44,17 @@ namespace WSR_Medical.Pages
             ServiceCB.ItemsSource = Context._con.Service.ToList();
         }
 
-        private void AddPatient(object sender, RoutedEventArgs e)
+        private void EditPatient(object sender, RoutedEventArgs e)
         {
-            
-            NavigationService.Navigate(new AddPatient());
+            var patient = Context._con.Patient.Where(p => p.FirstName == FirstNameCB.Text && p.SecondName == SecondNameCB.Text && p.MiddleName == MiddleNameCB.Text).FirstOrDefault();
+            if (patient != null)
+            {
+                NavigationService.Navigate(new AddPatient(patient));
+            }
+            else
+            {
+                ShowMessage.ErrMessage("Пациент не найден");
+            }
         }
 
         private void CheckBiomaterialNumber(object sender, RoutedEventArgs e)
@@ -163,6 +170,11 @@ namespace WSR_Medical.Pages
                 SecondNameCB.SelectedItem = patient;
                 MiddleNameCB.SelectedItem = patient;
             }
+        }
+
+        private void AddPatient(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddPatient());
         }
     }
 }

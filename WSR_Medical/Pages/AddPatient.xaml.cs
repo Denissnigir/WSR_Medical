@@ -22,36 +22,61 @@ namespace WSR_Medical.Pages
     /// </summary>
     public partial class AddPatient : Page
     {
-        Patient patient;
         List<InsuranceCompany> insuranceCompanies = new List<InsuranceCompany>();
         List<InsuranceType> insuranceTypes = new List<InsuranceType>();
+        Patient patientData;
+        Patient patientSender;
 
-        public AddPatient()
+        public AddPatient(Patient patient = null)
         {
             InitializeComponent();
-            patient = new Patient();
-            MainGrid.DataContext = patient;
+            patientSender = patient;
+            if (patient == null)
+            {
+                patientData = new Patient();
+            }
+            else
+            {
+                patientData = patient;
+            }
+            MainGrid.DataContext = patientData;
             insuranceCompanies = Context._con.InsuranceCompany.ToList();
             insuranceTypes = Context._con.InsuranceType.ToList();
             insuranceCompanies.Insert(0, new InsuranceCompany { Name = "Выберите компанию" });
             insuranceTypes.Insert(0, new InsuranceType { Name = "Выберите тип" });
             InsuranceTypeCB.ItemsSource = insuranceTypes;
             InsuranceNameCB.ItemsSource = insuranceCompanies;
-            InsuranceTypeCB.SelectedIndex = 0;
-            InsuranceNameCB.SelectedIndex = 0;
+            if (patient != null)
+            {
+                InsuranceTypeCB.SelectedIndex = patient.InsuranceTypeId;
+                InsuranceNameCB.SelectedIndex = patient.InsuranceCompanyId;
+            }
+            else
+            {
+                InsuranceTypeCB.SelectedIndex = 0;
+                InsuranceNameCB.SelectedIndex = 0;
+            }
 
-            
         }
 
         private void AddPatientClick(object sender, RoutedEventArgs e)
         {
             DateTime dateTime = (DateTime)BirthDateDP.SelectedDate;
             long ticks = dateTime.Ticks;
-            patient.BirthDate = ticks;
-            Context._con.Patient.Add(patient);
+            patientData.BirthDate = ticks;
+            if(patientSender == null)
+            {
+                Context._con.Patient.Add(patientData);
+            }
             Context._con.SaveChanges();
-
-            ShowMessage.InfMessage("Пациент зарегестрирован!");
+            if(patientSender == null)
+            {
+                ShowMessage.InfMessage("Пациент зарегестрирован!");
+            }
+            else 
+            {
+                ShowMessage.InfMessage("Пациент отредактирован!");
+            }
             NavigationService.Navigate(new AddBiomaterial());
         }
     }

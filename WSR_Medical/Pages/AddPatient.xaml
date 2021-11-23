@@ -31,7 +31,7 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1">
                 <TextBox Text="{Binding Path=SecondName}" Grid.Column="1" Height="35" Width="150" HorizontalAlignment="Left" Margin="10"/>
                 <TextBox Text="{Binding Path=FirstName}" Grid.Column="1" Height="35" Width="140" HorizontalAlignment="Left" Margin="10"/>
-                <TextBox Text="{Binding Path=ThirdName}" Grid.Column="1" Height="35" Width="150" HorizontalAlignment="Left" Margin="10"/>
+                <TextBox Text="{Binding Path=MiddleName}" Grid.Column="1" Height="35" Width="150" HorizontalAlignment="Left" Margin="10"/>
             </StackPanel>
         </Grid>
 

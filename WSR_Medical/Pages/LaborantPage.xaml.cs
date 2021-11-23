@@ -32,5 +32,9 @@ namespace WSR_Medical.Pages
             NavigationService.Navigate(new AddBiomaterial());
         }
 
+        private void ToReports(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ReportPage());
+        }
     }
 }
