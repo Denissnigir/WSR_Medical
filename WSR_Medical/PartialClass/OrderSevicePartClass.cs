@@ -9,5 +9,6 @@ namespace WSR_Medical.Model
     public partial class OrderService
     {
         public int Procent { get; set; }
+
     }
 }

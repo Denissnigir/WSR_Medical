@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*"/>
             <RowDefinition/>
+            <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
         <Grid>
@@ -44,5 +45,14 @@
                 </charts:Chart.Legends>
             </charts:Chart>
         </WindowsFormsHost>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Width="200" Height="35" Content="Печать" Click="PrintClick"/>
+            <Button Grid.Column="1" Width="200" Height="35" Content="Таблица" Click="PrintToXls"/>
+        </Grid>
     </Grid>
 </Page>
